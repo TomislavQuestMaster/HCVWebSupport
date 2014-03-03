@@ -18,5 +18,6 @@ public class HCVCommServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		response.getWriter().println("{\"item\":\"Hello HCV\"}");
 	}
 }
