@@ -27,4 +27,13 @@
 		<url-pattern>/test</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>HCVUploadServlet</servlet-name>
+		<servlet-class>servlets.HCVUploadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HCVUploadServlet</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+
 </web-app>

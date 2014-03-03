@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * @author tdubravcevic
  */
-public class HCVCommServlet extends HttpServlet {
+public class HCVUploadServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
