@@ -36,4 +36,13 @@
 		<url-pattern>/upload</url-pattern>
 	</servlet-mapping>
 
+    <servlet>
+        <servlet-name>DatabaseInitializationServlet</servlet-name>
+        <servlet-class>servlets.InitDatabase</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DatabaseInitializationServlet</servlet-name>
+        <url-pattern>/dbinit</url-pattern>
+    </servlet-mapping>
+
 </web-app>
