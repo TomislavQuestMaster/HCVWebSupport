@@ -1,11 +1,9 @@
 package core;
 
 import database.Database;
-import database.DatabaseException;
 import model.Coach;
 import model.Training;
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import serializer.JsonSerializer;
@@ -13,7 +11,6 @@ import utils.Utility;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 
