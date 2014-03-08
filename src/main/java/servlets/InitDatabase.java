@@ -26,7 +26,7 @@ public class InitDatabase extends HttpServlet {
         Database db = new Database(Utility.getLocalConnection());
         try {
             db.dropTable("trainings");
-            db.createTable();
+            db.createTrainingsTable();
         } catch (DatabaseException e) {
             e.printStackTrace();
             out.println("FAIL: " + e.getMessage());
