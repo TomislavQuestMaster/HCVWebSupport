@@ -5,30 +5,32 @@
 		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
            version="3.0">
 
-	<display-name>MySQL DataSource Example</display-name>
-
-	<resource-ref>
-		<description>MySQL Datasource example</description>
-		<res-ref-name>jdbc/hcv</res-ref-name>
-		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
-	</resource-ref>
-
 	<welcome-file-list>
 		<welcome-file>hello</welcome-file>
 	</welcome-file-list>
 
-	<servlet>
-		<servlet-name>HelloWeb</servlet-name>
-		<servlet-class>
-			org.springframework.web.servlet.DispatcherServlet
-		</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
+    <servlet>
+        <servlet-name>sample</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>
+                org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+            </param-value>
+        </init-param>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                hcv.spring.config.WebAppConfig
+            </param-value>
+        </init-param>
+    </servlet>
 
-	<servlet-mapping>
-		<servlet-name>HelloWeb</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sample</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
 
 </web-app>
+
+
