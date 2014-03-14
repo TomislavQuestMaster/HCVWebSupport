@@ -1,13 +1,16 @@
 package hcv.spring.controller;
 
 import hcv.spring.model.Data;
+import hcv.spring.model.FetchRequest;
 import hcv.spring.model.UpdateRequest;
 import hcv.spring.model.UpdateResponse;
 import hcv.spring.service.IDataService;
+import org.hibernate.annotations.Fetch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +22,10 @@ public class UpdateController {
 
     @Autowired
     private IDataService IDataService;
+
+    public void setIDataService(IDataService IDataService) {
+        this.IDataService = IDataService;
+    }
 
     @RequestMapping(value="/update", method=RequestMethod.POST)
     public @ResponseBody UpdateResponse updating(@RequestBody UpdateRequest request) {
@@ -39,9 +46,19 @@ public class UpdateController {
     }
 
     @RequestMapping(value="/fetch", method=RequestMethod.POST)
-    public @ResponseBody List<Data> fetching(@RequestBody UpdateRequest request) {
+    public @ResponseBody List<Data> fetching(@RequestBody FetchRequest request) {
 
-        return IDataService.getAllData();
+        List<Data> dataList = IDataService.getAllData();
+
+        List<Data> result = new ArrayList<Data>();
+
+        for(Data data : dataList){
+            if(data.getLastUpdate()<request.getLastUpdate() && !data.getUpdatingDeviceName().equals(request.getDeviceName())){
+                result.add(data);
+            }
+        }//TODO refactor spring data
+
+        return result;
     }
 }
 

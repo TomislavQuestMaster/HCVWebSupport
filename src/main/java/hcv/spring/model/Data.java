@@ -22,6 +22,16 @@ public class Data {
     private Long lastUpdate;
     private String updatingDeviceName;
 
+    public Data() {
+    }
+
+    public Data(Integer id, Integer uniqueDeviceId, String name, Long lastUpdate, String updatingDeviceName) {
+        this.id = id;
+        this.uniqueDeviceId = uniqueDeviceId;
+        this.name = name;
+        this.lastUpdate = lastUpdate;
+        this.updatingDeviceName = updatingDeviceName;
+    }
 
     public Integer getId() {
         return id;
