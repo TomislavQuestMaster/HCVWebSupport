@@ -1,8 +1,8 @@
-package servlets;
+package hcv.servlets;
 
-import database.Database;
-import database.DatabaseException;
-import utils.Utility;
+import hcv.database.Database;
+import hcv.database.DatabaseException;
+import hcv.utils.Utility;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

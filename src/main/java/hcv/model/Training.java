@@ -1,4 +1,4 @@
-package model;
+package hcv.model;
 
 /**
  * Created by Tomo.

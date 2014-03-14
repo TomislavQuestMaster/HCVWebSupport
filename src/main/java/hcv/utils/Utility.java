@@ -1,4 +1,4 @@
-package utils;
+package hcv.utils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;

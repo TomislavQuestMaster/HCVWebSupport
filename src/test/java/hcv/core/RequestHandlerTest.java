@@ -1,8 +1,6 @@
-package core;
+package hcv.core;
 
 import org.junit.Test;
-
-import javax.servlet.ServletException;
 
 /**
  * Created by Tomo.

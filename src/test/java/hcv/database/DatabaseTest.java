@@ -1,10 +1,10 @@
-package database;
+package hcv.database;
 
-import model.Coach;
-import model.RightsLevel;
+import hcv.model.Coach;
+import hcv.model.RightsLevel;
 import org.junit.Before;
 import org.junit.Test;
-import utils.Utility;
+import hcv.utils.Utility;
 
 import static junit.framework.Assert.assertEquals;
 

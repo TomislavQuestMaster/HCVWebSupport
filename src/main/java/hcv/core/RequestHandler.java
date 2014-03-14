@@ -1,13 +1,13 @@
-package core;
+package hcv.core;
 
-import database.Database;
-import model.Coach;
-import model.Training;
+import hcv.database.Database;
+import hcv.model.Coach;
+import hcv.model.Training;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import serializer.JsonSerializer;
-import utils.Utility;
+import hcv.serializer.JsonSerializer;
+import hcv.utils.Utility;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;

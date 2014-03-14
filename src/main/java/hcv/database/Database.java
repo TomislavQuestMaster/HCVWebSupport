@@ -1,7 +1,7 @@
-package database;
+package hcv.database;
 
-import model.Coach;
-import model.RightsLevel;
+import hcv.model.Coach;
+import hcv.model.RightsLevel;
 
 import java.sql.*;
 

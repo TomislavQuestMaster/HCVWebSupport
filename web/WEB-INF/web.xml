@@ -15,34 +15,20 @@
 	</resource-ref>
 
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>hello</welcome-file>
 	</welcome-file-list>
 
 	<servlet>
-		<servlet-name>HCVCommServlet</servlet-name>
-		<servlet-class>servlets.HCVCommServlet</servlet-class>
+		<servlet-name>HelloWeb</servlet-name>
+		<servlet-class>
+			org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
-	<servlet-mapping>
-		<servlet-name>HCVCommServlet</servlet-name>
-		<url-pattern>/test</url-pattern>
-	</servlet-mapping>
 
-	<servlet>
-		<servlet-name>HCVUploadServlet</servlet-name>
-		<servlet-class>servlets.HCVUploadServlet</servlet-class>
-	</servlet>
 	<servlet-mapping>
-		<servlet-name>HCVUploadServlet</servlet-name>
-		<url-pattern>/upload</url-pattern>
+		<servlet-name>HelloWeb</servlet-name>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
-    <servlet>
-        <servlet-name>DatabaseInitializationServlet</servlet-name>
-        <servlet-class>servlets.InitDatabase</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>DatabaseInitializationServlet</servlet-name>
-        <url-pattern>/dbinit</url-pattern>
-    </servlet-mapping>
 
 </web-app>

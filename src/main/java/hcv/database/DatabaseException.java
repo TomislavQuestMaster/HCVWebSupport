@@ -1,4 +1,4 @@
-package database;
+package hcv.database;
 
 /**
  * @author tdubravcevic
