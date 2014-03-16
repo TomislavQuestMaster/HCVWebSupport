@@ -5,6 +5,7 @@ import hcv.spring.model.Data;
 import hcv.spring.model.FetchRequest;
 import hcv.spring.service.IDataService;
 import org.junit.Test;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public class ControllerTest {
 
     IDataService service = mock(IDataService.class);
 
-    @Test//TODO refacotr test nicely
+    @Test//TODO refactor test nicely
     public void test(){
 
         UpdateController controller = new UpdateController();
@@ -43,5 +44,10 @@ public class ControllerTest {
         request.setDeviceName("ANDROID");
         list = controller.fetching(request);
         assertEquals(Integer.valueOf(2),list.get(0).getId());
+    }
+
+    @Test
+    public void test1(){
+        MultipartFile file;
     }
 }
