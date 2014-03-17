@@ -2,8 +2,8 @@ package hcv.spring.controller;
 
 import hcv.spring.model.Data;
 import hcv.spring.model.FetchRequest;
+import hcv.spring.model.Response;
 import hcv.spring.model.UpdateRequest;
-import hcv.spring.model.UpdateResponse;
 import hcv.spring.service.IDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +31,8 @@ public class UpdateController {
     }
 
     @RequestMapping(value="/update", method=RequestMethod.POST)
-    public @ResponseBody UpdateResponse updating(@RequestBody UpdateRequest request) {
+    public @ResponseBody
+	Response updating(@RequestBody UpdateRequest request) {
 
         Data data = new Data();
         data.setId(request.getId());
@@ -41,7 +42,7 @@ public class UpdateController {
 
         IDataService.updateData(data);
 
-        UpdateResponse response = new UpdateResponse();
+        Response response = new Response();
         response.setStatus(0);
         response.setMessage("Update successful");
 

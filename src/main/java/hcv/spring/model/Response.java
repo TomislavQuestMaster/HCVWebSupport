@@ -3,7 +3,7 @@ package hcv.spring.model;
 /**
  * Created by Tomo.
  */
-public class UpdateResponse {
+public class Response {
 
     private int status;
     private String message;
