@@ -1,6 +1,6 @@
-package hcv.spring.service;
+package hcv.spring.data.service;
 
-import hcv.spring.UserRepository;
+import hcv.spring.data.repositories.UserRepository;
 import hcv.spring.model.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +41,11 @@ public class UserService{
 	public User findById(Long id) {
 		return userRepository.findOne(id);
 	}
+
+    @Transactional(readOnly = true)
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 
 	@Transactional
 	public User update(User updated){

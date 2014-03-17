@@ -2,7 +2,6 @@ package hcv.core;
 
 import hcv.database.Database;
 import hcv.model.Coach;
-import hcv.model.Training;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -37,52 +36,22 @@ public class RequestHandler {
 
         List<FileItem> fileItemsList = uploader.parseRequest(request);
 
-        if (fileItemsList.size() != 3) {
+        if (fileItemsList.size() != 2) {
             throw new Exception("Not enough items: " + fileItemsList.size());
         }
 
-        Coach coach = authenticate(fileItemsList.get(0));
-        if (coach == null) {
-            return;
-        }
-
-        Training training = fetchDetails(fileItemsList.get(1));
-
-        acceptFile(fileItemsList.get(2), coach.getUsername() + File.separator + training.getName());
+        acceptFile(fileItemsList.get(1));
 
     }
 
-    private void acceptFile(FileItem fileItem, String path) throws Exception {
+    private void acceptFile(FileItem fileItem) throws Exception {
 
         if (!fileItem.getFieldName().equals("file")) {
             throw new Exception("Unsupported state: " + fileItem.getFieldName());
         }
 
-        File file = new File("C:\\Users\\Tomo\\Desktop\\" + path + File.separator + fileItem.getName());
+        File file = new File("C:\\Users\\Tomo\\Desktop\\" + fileItem.getName());
         fileItem.write(file);
-    }
-
-    private Coach authenticate(FileItem fileItem) throws Exception {
-
-        if (!fileItem.getFieldName().equals("auth")) {
-            throw new Exception("Unsupported state: " + fileItem.getFieldName());
-        }
-
-        Coach coach = (Coach) serializer.deserialize(fileItem.getString(), Coach.class);
-        if (!database.authenticateCoach(coach)) {
-            return null;
-        }
-
-        return coach;
-    }
-
-    private Training fetchDetails(FileItem fileItem) throws Exception {
-
-        if (!fileItem.getFieldName().equals("details")) {
-            throw new Exception("Unsupported state: " + fileItem.getFieldName());
-        }
-
-        return (Training) serializer.deserialize(fileItem.getString(), Training.class);
     }
 
 }
