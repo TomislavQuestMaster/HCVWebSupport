@@ -70,11 +70,10 @@ public class SynchronizationController {
         out.println("{\"item\":\"SUCCESS\"}");
     }
 
-    @RequestMapping(value = "/download", method = RequestMethod.GET)
+    @RequestMapping(value = "/download/{file_name}", method = RequestMethod.GET)
     @ResponseBody
-    public FileSystemResource getFile() {
-        //YO HO HO
-        return new FileSystemResource(new File("C:\\Users\\Tomo\\Desktop\\prvi.xml"));
+    public FileSystemResource getFile(@PathVariable("file_name") String fileName) {
+        return new FileSystemResource(new File("C:\\Users\\tdubravcevic\\Downloads\\HCV\\"+fileName+".xml"));
     }
 
 }
