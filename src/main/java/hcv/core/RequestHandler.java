@@ -50,7 +50,7 @@ public class RequestHandler {
             throw new Exception("Unsupported state: " + fileItem.getFieldName());
         }
 
-        File file = new File("C:\\Users\\Tomo\\Desktop\\" + fileItem.getName());
+        File file = new File("C:\\Users\\tdubravcevic\\Downloads\\HCV\\" + fileItem.getName());
         fileItem.write(file);
     }
 
