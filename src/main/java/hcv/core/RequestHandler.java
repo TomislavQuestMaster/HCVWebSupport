@@ -52,6 +52,9 @@ public class RequestHandler {
 
         File file = new File("C:\\Users\\tdubravcevic\\Downloads\\HCV\\" + fileItem.getName());
         fileItem.write(file);
+		//TODO update state in database
+		//database.insertTraining();
+		//database.updateTraining();
     }
 
 }
