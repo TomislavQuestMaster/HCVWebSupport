@@ -5,18 +5,20 @@ package hcv.model;
  */
 public class Response {
 
-    private int status;
+    private Integer status;
     private String message;
 
-    public int getStatus() {
-        return status;
-    }
+	public Integer getStatus() {
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+		return status;
+	}
 
-    public String getMessage() {
+	public void setStatus(Integer status) {
+
+		this.status = status;
+	}
+
+	public String getMessage() {
         return message;
     }
 

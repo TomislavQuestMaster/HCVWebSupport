@@ -1,8 +1,8 @@
 package hcv.spring.controller;
 
+import hcv.data.service.UserService;
 import hcv.model.Response;
 import hcv.model.user.User;
-import hcv.data.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,48 +19,58 @@ public class AuthenticationController {
 	@Autowired
 	private UserService service;
 
-	@RequestMapping(value="/register", method= RequestMethod.POST)
-	public @ResponseBody
-	Response registering(@RequestBody
-					  User request) {
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public
+	@ResponseBody
+	Response registering(
+			@RequestBody
+			User request) {
 
-        User found = service.findByUsername(request.getUsername());
+		User found = service.findByUsername(request.getUsername());
 
-        if(found!=null){
-            return failed("User exists");
-        }
+		if (found != null) {
+			return failed("User exists", 1);
+		}
 
-        service.create(request);
+		service.create(request);
 
 		return succeeded("Created user");
 	}
 
-    @RequestMapping(value="/authenticate", method= RequestMethod.POST)
-    public @ResponseBody
-    Response verifying(@RequestBody
-                      User request) {
+	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+	public
+	@ResponseBody
+	Response verifying(
+			@RequestBody
+			User request) {
 
-        User found = service.findByUsername(request.getUsername());
+		User found = service.findByUsername(request.getUsername());
 
-        if(found==null || !request.getPassword().equals(found.getPassword())){
-            return failed("Verification failed");
-        }
+		if (found == null) {
+			return failed("Verification failed, not found", 2);
+		}
 
-        return succeeded("Verification succeeded");
-    }
+		if (!request.getPassword().equals(found.getPassword())) {
+			return failed("Verification failed, wrong password", 3);
+		}
 
-    private Response failed(String message){
-        Response response = new Response();
-        response.setStatus(1);
-        response.setMessage(message);
-        return response;
-    }
+		return succeeded("Verification succeeded");
+	}
 
-    private Response succeeded(String message){
-        Response response = new Response();
-        response.setStatus(0);
-        response.setMessage(message);
-        return response;
-    }
+	private Response failed(String message, Integer status) {
+
+		Response response = new Response();
+		response.setStatus(status);
+		response.setMessage(message);
+		return response;
+	}
+
+	private Response succeeded(String message) {
+
+		Response response = new Response();
+		response.setStatus(0);
+		response.setMessage(message);
+		return response;
+	}
 
 }
