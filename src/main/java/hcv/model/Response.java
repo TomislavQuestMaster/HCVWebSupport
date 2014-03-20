@@ -8,6 +8,16 @@ public class Response {
     private Integer status;
     private String message;
 
+	public Response() {
+
+	}
+
+	public Response(Integer status, String message) {
+
+		this.status = status;
+		this.message = message;
+	}
+
 	public Integer getStatus() {
 
 		return status;

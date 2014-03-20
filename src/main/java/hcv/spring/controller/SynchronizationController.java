@@ -1,6 +1,6 @@
 package hcv.spring.controller;
 
-import hcv.core.RequestHandler;
+import hcv.core.UploadHandler;
 import hcv.model.FetchRequest;
 import hcv.model.Response;
 import hcv.model.Training;
@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
@@ -54,24 +52,20 @@ public class SynchronizationController {
     }
 
     @RequestMapping(value="/upload", method=RequestMethod.POST)
-    protected void upload(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected @ResponseBody Response upload(HttpServletRequest request) throws ServletException, IOException {
 
-        RequestHandler handler = new RequestHandler();
+        UploadHandler handler = new UploadHandler();
 
         if (!ServletFileUpload.isMultipartContent(request)) {
             throw new ServletException("Content type is not multipart/form-data");
         }
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
 
         try {
             handler.onRequest(request);
         } catch (Exception e) {
-            e.printStackTrace();
-            out.println("{\"item\":\"fail: " + e.getMessage() + " \"}");
-            return;
+            return new Response(5, "Upload failed: " +  e.getMessage());
         }
-        out.println("{\"item\":\"SUCCESS\"}");
+		return new Response(0, "Upload successful");
     }
 
     @RequestMapping(value = "/download/{file_name}", method = RequestMethod.GET)

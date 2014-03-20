@@ -1,5 +1,6 @@
 package hcv.core;
 
+import hcv.AppProperties;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -14,18 +15,15 @@ import java.util.List;
 /**
  * Created by Tomo.
  */
-public class RequestHandler {
+public class UploadHandler {
 
     private final ServletFileUpload uploader;
-    private final JsonSerializer serializer;
 
-    public RequestHandler() {
+    public UploadHandler() {
         DiskFileItemFactory fileFactory = new DiskFileItemFactory();
-        File filesDir = new File("C:\\Users\\Tomo\\Desktop");
-        fileFactory.setRepository(filesDir);
+        fileFactory.setRepository(new File(AppProperties.FILE_LOCATION.getValue()));
 
         this.uploader = new ServletFileUpload(fileFactory);
-        this.serializer = new JsonSerializer();
     }
 
     public void onRequest(HttpServletRequest request) throws Exception {
@@ -37,7 +35,6 @@ public class RequestHandler {
         }
 
         acceptFile(fileItemsList.get(1));
-
     }
 
     private void acceptFile(FileItem fileItem) throws Exception {
@@ -46,14 +43,8 @@ public class RequestHandler {
             throw new Exception("Unsupported state: " + fileItem.getFieldName());
         }
 
-        File file = new File("C:\\Users\\tdubravcevic\\Downloads\\HCV\\" + fileItem.getName());
+        File file = new File(AppProperties.FILE_LOCATION.getValue() + "\\" + fileItem.getName());
         fileItem.write(file);
-		//TODO update state in database
-		//database.insertTraining();
-		//database.updateTraining();
     }
 
 }
-
-
-//http://www.journaldev.com/1964/servlet-upload-file-and-download-file-example
