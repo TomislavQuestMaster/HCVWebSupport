@@ -1,6 +1,4 @@
-package hcv.spring.model;
-
-import hcv.model.RightsLevel;
+package hcv.model.user;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,20 +14,22 @@ public class User {
 
     @Id
 	@GeneratedValue
-    private Long id;
+	private Long id;
 	private String username;
 	private String password;
 	private RightsLevel rightsLevel;
 	private UserType userType;
+	private Integer clubId;
 
 	public User() {
 	}
 
-	public User(String username, String password, RightsLevel rightsLevel, UserType userType) {
+	public User(String username, String password, RightsLevel rightsLevel, UserType userType, Integer clubId) {
 		this.username = username;
 		this.password = password;
 		this.rightsLevel = rightsLevel;
 		this.userType = userType;
+		this.clubId = clubId;
 	}
 
 	public String getUsername() {
@@ -74,5 +74,15 @@ public class User {
 	public void setId(Long id) {
 
 		this.id = id;
+	}
+
+	public Integer getClubId() {
+
+		return clubId;
+	}
+
+	public void setClubId(Integer clubId) {
+
+		this.clubId = clubId;
 	}
 }

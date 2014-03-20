@@ -1,4 +1,4 @@
-package hcv.model;
+package hcv.model.user;
 
 /**
  * Created by Tomo.

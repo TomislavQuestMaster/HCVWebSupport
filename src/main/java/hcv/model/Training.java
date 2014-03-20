@@ -1,4 +1,4 @@
-package hcv.spring.model;
+package hcv.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +14,7 @@ public class Training {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
 
     private String name;
     private Integer uniqueDeviceId;
@@ -25,15 +25,17 @@ public class Training {
     public Training() {
     }
 
-    public Integer getId() {
-        return id;
-    }
+	public Long getId() {
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+		return id;
+	}
 
-    public String getName() {
+	public void setId(Long id) {
+
+		this.id = id;
+	}
+
+	public String getName() {
         return name;
     }
 

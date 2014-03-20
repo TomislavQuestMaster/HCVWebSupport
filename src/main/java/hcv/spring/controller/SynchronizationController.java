@@ -1,8 +1,10 @@
 package hcv.spring.controller;
 
 import hcv.core.RequestHandler;
-import hcv.spring.data.repositories.TrainingRepository;
-import hcv.spring.model.*;
+import hcv.model.FetchRequest;
+import hcv.model.Response;
+import hcv.model.Training;
+import hcv.data.repositories.TrainingRepository;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -29,7 +31,8 @@ public class SynchronizationController {
 
     @RequestMapping(value="/update", method=RequestMethod.POST)
     public @ResponseBody
-    Response createOrUpdateTraining(@RequestBody Training training) {
+	Response createOrUpdateTraining(@RequestBody
+									Training training) {
 
         Long time = (new Date()).getTime();
         training.setLastUpdate(time);
@@ -44,7 +47,8 @@ public class SynchronizationController {
 
 
     @RequestMapping(value="/fetch", method=RequestMethod.POST)
-    public @ResponseBody List<Training> fetching(@RequestBody FetchRequest request) {
+    public @ResponseBody List<Training> fetching(@RequestBody
+													 FetchRequest request) {
 
         return repository.getUnsyncedTrainings(request.getLastUpdate(), request.getDeviceName());
     }

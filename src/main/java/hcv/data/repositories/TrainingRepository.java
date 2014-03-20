@@ -1,6 +1,6 @@
-package hcv.spring.data.repositories;
+package hcv.data.repositories;
 
-import hcv.spring.model.Training;
+import hcv.model.Training;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

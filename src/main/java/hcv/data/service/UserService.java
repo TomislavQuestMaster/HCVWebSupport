@@ -1,7 +1,7 @@
-package hcv.spring.data.service;
+package hcv.data.service;
 
-import hcv.spring.data.repositories.UserRepository;
-import hcv.spring.model.User;
+import hcv.data.repositories.UserRepository;
+import hcv.model.user.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,42 +15,42 @@ import java.util.List;
 public class UserService{
 
 	@Resource
-	private UserRepository userRepository;
+	private UserRepository repository;
 
 	@Transactional
 	public User create(User user) {
 
-		return userRepository.save(user);
+		return repository.save(user);
 	}
 
 	@Transactional
 	public User delete(Long personId){
 
-		User deleted = userRepository.findOne(personId);
+		User deleted = repository.findOne(personId);
 
-		userRepository.delete(deleted);
+		repository.delete(deleted);
 		return deleted;
 	}
 
 	@Transactional(readOnly = true)
 	public List<User> findAll() {
-		return userRepository.findAll();
+		return repository.findAll();
 	}
 
 	@Transactional(readOnly = true)
 	public User findById(Long id) {
-		return userRepository.findOne(id);
+		return repository.findOne(id);
 	}
 
     @Transactional(readOnly = true)
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return repository.findByUsername(username);
     }
 
 	@Transactional
 	public User update(User updated){
 
-		User user = userRepository.findOne(updated.getId());
+		User user = repository.findOne(updated.getId());
 
 		user.setUsername(updated.getUsername());
 
@@ -59,6 +59,6 @@ public class UserService{
 
 
 	protected void setPersonRepository(UserRepository userRepository) {
-		this.userRepository = userRepository;
+		this.repository = userRepository;
 	}
 }

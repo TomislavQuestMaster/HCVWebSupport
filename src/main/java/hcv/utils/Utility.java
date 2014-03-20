@@ -10,35 +10,5 @@ import java.sql.DriverManager;
  */
 public class Utility {
 
-    public static String getBody(HttpServletRequest request){
 
-        StringBuilder stringBuilder = new StringBuilder();
-        String line;
-        try {
-            BufferedReader reader = request.getReader();
-            while ((line = reader.readLine()) != null)
-                stringBuilder.append(line);
-        } catch (Exception e) {
-            return null;
-        }
-
-        return stringBuilder.toString();
-    }
-
-    public static Connection getLocalConnection() {
-
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (Exception e) {
-            return null;
-        }
-
-        try {
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/hcvdb", "root", "root");
-
-        } catch (Exception e) {
-            // TODO throw exception
-            return null;
-        }
-    }
 }

@@ -1,4 +1,4 @@
-package hcv.spring.model;
+package hcv.model;
 
 /**
  * Created by Tomo.

@@ -1,4 +1,4 @@
-package hcv.spring.model;
+package hcv.model.user;
 
 /**
  * @author tdubravcevic

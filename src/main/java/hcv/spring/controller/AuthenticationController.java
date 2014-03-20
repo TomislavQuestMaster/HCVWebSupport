@@ -1,8 +1,8 @@
 package hcv.spring.controller;
 
-import hcv.spring.model.Response;
-import hcv.spring.model.User;
-import hcv.spring.data.service.UserService;
+import hcv.model.Response;
+import hcv.model.user.User;
+import hcv.data.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;

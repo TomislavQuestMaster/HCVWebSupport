@@ -1,6 +1,6 @@
-package hcv.spring.data.repositories;
+package hcv.data.repositories;
 
-import hcv.spring.model.User;
+import hcv.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
