@@ -1,20 +1,19 @@
 package hcv.spring.controller;
 
-import hcv.core.UploadHandler;
+import hcv.core.RequestHandler;
+import hcv.data.repositories.TrainingRepository;
+import hcv.manager.IFileManager;
 import hcv.model.FetchRequest;
 import hcv.model.Response;
 import hcv.model.Training;
-import hcv.data.repositories.TrainingRepository;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import hcv.model.UpdateRequest;
+import org.apache.commons.fileupload.FileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -24,54 +23,51 @@ import java.util.List;
 @Controller
 public class SynchronizationController {
 
-    @Autowired
-    private TrainingRepository repository;
+	@Autowired
+	private TrainingRepository repository;
 
-    @RequestMapping(value="/update", method=RequestMethod.POST)
-    public @ResponseBody
-	Response createOrUpdateTraining(@RequestBody
-									Training training) {
+	//@Autowired
+	//private IFileManager manager;
 
-        Long time = (new Date()).getTime();
-        training.setLastUpdate(time);
-        repository.save(training);
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public @ResponseBody Response update(@RequestBody Training received) {
 
-        Response response = new Response();
-        response.setStatus(0);
-        response.setMessage("Update successful");
+		received.setLastUpdate((new Date()).getTime());
+		received = repository.save(received);
 
-        return response;
-    }
+		return new Response(received.getId().intValue(), "Update successful");  //TODO different id returning
+	}
 
+	@RequestMapping(value = "/fetch", method = RequestMethod.POST)
+	public @ResponseBody List<Training> fetch(@RequestBody FetchRequest request) {
 
-    @RequestMapping(value="/fetch", method=RequestMethod.POST)
-    public @ResponseBody List<Training> fetching(@RequestBody
-													 FetchRequest request) {
+		return repository.getUnsyncedTrainings(request.getLastUpdate(), request.getDeviceName());
+	}
 
-        return repository.getUnsyncedTrainings(request.getLastUpdate(), request.getDeviceName());
-    }
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public @ResponseBody Response upload(HttpServletRequest request) {
 
-    @RequestMapping(value="/upload", method=RequestMethod.POST)
-    protected @ResponseBody Response upload(HttpServletRequest request) throws ServletException, IOException {
+		RequestHandler handler = new RequestHandler();
 
-        UploadHandler handler = new UploadHandler();
+		FileItem item;
+		try {
+			item = handler.parseRequest(request);
+		} catch (Exception e) {
+			return new Response(5, "Upload failed: " + e.getMessage());
+		}
 
-        if (!ServletFileUpload.isMultipartContent(request)) {
-            throw new ServletException("Content type is not multipart/form-data");
-        }
+		Training training = repository.getOne(Long.decode(item.getName()));
+		//manager.storeFile(training, item);
 
-        try {
-            handler.onRequest(request);
-        } catch (Exception e) {
-            return new Response(5, "Upload failed: " +  e.getMessage());
-        }
 		return new Response(0, "Upload successful");
-    }
+	}
 
-    @RequestMapping(value = "/download/{file_name}", method = RequestMethod.GET)
-    @ResponseBody
-    public FileSystemResource getFile(@PathVariable("file_name") String fileName) {
-        return new FileSystemResource(new File("C:\\Users\\tdubravcevic\\Downloads\\HCV\\"+fileName+".xml"));
-    }
+	@RequestMapping(value = "/download/{file_id}", method = RequestMethod.GET)
+	public @ResponseBody FileSystemResource download(@PathVariable("file_id") Long fileId) {
+
+		//Training training = repository.findOne(fileId);
+		//return new FileSystemResource(manager.fetchFile(training));
+		return null;
+	}
 
 }

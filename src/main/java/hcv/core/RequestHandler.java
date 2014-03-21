@@ -7,6 +7,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import hcv.serializer.JsonSerializer;
 import hcv.utils.Utility;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.List;
@@ -15,18 +16,22 @@ import java.util.List;
 /**
  * Created by Tomo.
  */
-public class UploadHandler {
+public class RequestHandler {
 
     private final ServletFileUpload uploader;
 
-    public UploadHandler() {
+    public RequestHandler() {
         DiskFileItemFactory fileFactory = new DiskFileItemFactory();
         fileFactory.setRepository(new File(AppProperties.FILE_LOCATION.getValue()));
 
         this.uploader = new ServletFileUpload(fileFactory);
     }
 
-    public void onRequest(HttpServletRequest request) throws Exception {
+    public FileItem parseRequest(HttpServletRequest request) throws Exception {
+
+		if (!ServletFileUpload.isMultipartContent(request)) {
+			throw new ServletException("Content type is not multipart/form-data");
+		}
 
         List<FileItem> fileItemsList = uploader.parseRequest(request);
 
@@ -34,7 +39,7 @@ public class UploadHandler {
             throw new Exception("Not enough items: " + fileItemsList.size());
         }
 
-        acceptFile(fileItemsList.get(1));
+		return fileItemsList.get(1);
     }
 
     private void acceptFile(FileItem fileItem) throws Exception {

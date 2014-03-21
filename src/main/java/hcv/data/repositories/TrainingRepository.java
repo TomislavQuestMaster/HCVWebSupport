@@ -13,4 +13,9 @@ public interface TrainingRepository extends JpaRepository<Training, Long> {
 
     @Query("select t from Training t where t.lastUpdate < ? and t.updatingDeviceName != ?")
     public List<Training> getUnsyncedTrainings(Long lastUpdate, String updatingDeviceName);
+
+	public Training findById(Long id);
+
+	public Training findByName(String name);
+
 }

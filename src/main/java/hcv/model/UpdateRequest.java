@@ -5,19 +5,20 @@ package hcv.model;
  */
 public class UpdateRequest {
 
-    private Integer id;
+    private Long id;
     private String deviceName;
-    private String name;
 
-    public Integer getId() {
-        return id;
-    }
+	public Long getId() {
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+		return id;
+	}
 
-    public String getDeviceName() {
+	public void setId(Long id) {
+
+		this.id = id;
+	}
+
+	public String getDeviceName() {
         return deviceName;
     }
 
@@ -25,11 +26,4 @@ public class UpdateRequest {
         this.deviceName = deviceName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

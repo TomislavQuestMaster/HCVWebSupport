@@ -5,12 +5,12 @@ import org.junit.Test;
 /**
  * Created by Tomo.
  */
-public class UploadHandlerTest {
+public class RequestHandlerTest {
 
     @Test
     public void test(){
 
-        UploadHandler handler = new UploadHandler();
+        RequestHandler handler = new RequestHandler();
     }
 
 }
