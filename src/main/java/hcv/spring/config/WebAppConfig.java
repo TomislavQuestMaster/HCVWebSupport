@@ -1,5 +1,7 @@
 package hcv.spring.config;
 
+import hcv.manager.FileManager;
+import hcv.manager.IFileManager;
 import org.hibernate.ejb.HibernatePersistence;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -93,4 +95,8 @@ public class WebAppConfig {
 		return resolver;
 	}
 
+    @Bean
+    public IFileManager fileManager(){
+        return new FileManager();
+    }
 }

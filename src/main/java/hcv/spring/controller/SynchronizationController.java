@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.List;
 
@@ -26,8 +27,8 @@ public class SynchronizationController {
 	@Autowired
 	private TrainingRepository repository;
 
-	//@Autowired
-	//private IFileManager manager;
+	@Autowired
+	private IFileManager manager;
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody Response update(@RequestBody Training received) {
@@ -53,21 +54,29 @@ public class SynchronizationController {
 		try {
 			item = handler.parseRequest(request);
 		} catch (Exception e) {
-			return new Response(5, "Upload failed: " + e.getMessage());
+			return new Response(5, "Parsing request on upload failed: " + e.getMessage());
 		}
 
-		Training training = repository.getOne(Long.decode(item.getName()));
-		//manager.storeFile(training, item);
+		Training training = repository.findById(Long.decode(item.getName()));
+        try {
+            manager.storeFile(training, item);
+        } catch (Exception e) {
+            return new Response(6, "Upload failed: " + e.getMessage());
+        }
 
-		return new Response(0, "Upload successful");
+        return new Response(0, "Upload successful");
 	}
 
 	@RequestMapping(value = "/download/{file_id}", method = RequestMethod.GET)
-	public @ResponseBody FileSystemResource download(@PathVariable("file_id") Long fileId) {
+	public @ResponseBody FileSystemResource download(@PathVariable("file_id") Long fileId) throws FileNotFoundException {
 
-		//Training training = repository.findOne(fileId);
-		//return new FileSystemResource(manager.fetchFile(training));
-		return null;
+		Training training = repository.findById(fileId);
+
+        if(training == null){
+            throw new FileNotFoundException("No file with uid: " + fileId);
+        }
+
+		return new FileSystemResource(manager.fetchFile(training));
 	}
 
 }

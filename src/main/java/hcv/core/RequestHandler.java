@@ -42,14 +42,4 @@ public class RequestHandler {
 		return fileItemsList.get(1);
     }
 
-    private void acceptFile(FileItem fileItem) throws Exception {
-
-        if (!fileItem.getFieldName().equals("file")) {
-            throw new Exception("Unsupported state: " + fileItem.getFieldName());
-        }
-
-        File file = new File(AppProperties.FILE_LOCATION.getValue() + "\\" + fileItem.getName());
-        fileItem.write(file);
-    }
-
 }

@@ -14,11 +14,17 @@ public class FileManager implements IFileManager{
 	@Override
 	public File fetchFile(Training training) {
 
-		return null;
+		return new File(AppProperties.FILE_LOCATION.getValue() + "\\" + training.getId() + ".xml");
 	}
 
 	@Override
-	public void storeFile(Training training, FileItem item) {
+	public void storeFile(Training training, FileItem item) throws Exception {
 
+        if (!item.getFieldName().equals("file")) {
+            throw new Exception("Unsupported state: " + item.getFieldName());
+        }
+
+        File file = new File(AppProperties.FILE_LOCATION.getValue() + "\\" + item.getName() + ".xml");
+        item.write(file);
 	}
 }
