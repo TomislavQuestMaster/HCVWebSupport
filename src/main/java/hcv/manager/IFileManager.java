@@ -13,4 +13,6 @@ public interface IFileManager {
 	File fetchFile(Training training);
 
 	void storeFile(Training training, FileItem item) throws Exception;
+
+    void deleteFile(Training training) throws Exception;
 }

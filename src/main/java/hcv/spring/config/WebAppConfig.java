@@ -28,7 +28,7 @@ import java.util.Properties;
 @ComponentScan("hcv")
 @EnableWebMvc
 @EnableTransactionManagement
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:cloudbees/application.properties")
 @EnableJpaRepositories("hcv")
 public class WebAppConfig {
 

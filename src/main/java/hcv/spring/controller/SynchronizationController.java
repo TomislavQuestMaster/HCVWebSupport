@@ -34,10 +34,42 @@ public class SynchronizationController {
 	public @ResponseBody Response update(@RequestBody Training received) {
 
 		received.setLastUpdate((new Date()).getTime());
+
 		received = repository.save(received);
 
 		return new Response(received.getId().intValue(), "Update successful");  //TODO different id returning
 	}
+
+    //TODO replace update with update 2
+    @RequestMapping(value = "/update2", method = RequestMethod.POST)
+    public @ResponseBody Response newUpdate(@RequestBody Training received, @RequestBody FetchRequest request) {
+
+        Training found = repository.findById(received.getId());
+        if(found!=null &&
+                found.getUpdatingDeviceName().equals(request.getDeviceName()) &&
+                found.getLastUpdate() > request.getLastUpdate()){
+          received.setId(-1L);
+          received.setName(received.getName()+"_"+request.getDeviceName());
+        }
+
+        received.setLastUpdate((new Date()).getTime());
+        received = repository.save(received);
+        return new Response(received.getId().intValue(), "Update successful");  //TODO different id returning
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public @ResponseBody Response delete(@RequestBody Training received) {
+
+        repository.delete(received.getId());
+
+        try {
+            manager.deleteFile(received);
+        } catch (Exception e) {
+            return new Response(7, "Delete failed");
+        }
+
+        return new Response(0, "Delete successful");
+    }
 
 	@RequestMapping(value = "/fetch", method = RequestMethod.POST)
 	public @ResponseBody List<Training> fetch(@RequestBody FetchRequest request) {

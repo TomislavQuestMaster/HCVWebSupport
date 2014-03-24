@@ -27,4 +27,14 @@ public class FileManager implements IFileManager{
         File file = new File(AppProperties.FILE_LOCATION.getValue() + "\\" + item.getName() + ".xml");
         item.write(file);
 	}
+
+    @Override
+    public void deleteFile(Training training) throws Exception {
+
+        File file = new File(AppProperties.FILE_LOCATION.getValue() + "\\" + training.getId() + ".xml");
+
+        if(!file.delete()){
+            throw new Exception("Delete failed");
+        }
+    }
 }
