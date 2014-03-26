@@ -1,5 +1,6 @@
 package hcv.spring.config;
 
+import hcv.manager.DropboxFileManager;
 import hcv.manager.FileManager;
 import hcv.manager.IFileManager;
 import org.hibernate.ejb.HibernatePersistence;
@@ -99,6 +100,6 @@ public class WebAppConfig {
 
     @Bean
     public IFileManager fileManager(){
-        return new FileManager();
+        return new DropboxFileManager();
     }
 }

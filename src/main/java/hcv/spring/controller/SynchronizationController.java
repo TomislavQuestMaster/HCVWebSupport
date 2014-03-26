@@ -1,5 +1,7 @@
 package hcv.spring.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import hcv.core.RequestHandler;
 import hcv.data.repositories.TrainingRepository;
 import hcv.manager.IFileManager;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -30,23 +33,18 @@ public class SynchronizationController {
 	@Autowired
 	private IFileManager manager;
 
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public @ResponseBody Response update(@RequestBody Training received) {
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public @ResponseBody Response newUpdate(@RequestBody String body) throws IOException {
 
-		received.setLastUpdate((new Date()).getTime());
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode node = mapper.readTree(body);
 
-		received = repository.save(received);
-
-		return new Response(received.getId().intValue(), "Update successful");  //TODO different id returning
-	}
-
-    //TODO replace update with update 2
-    @RequestMapping(value = "/update2", method = RequestMethod.POST)
-    public @ResponseBody Response newUpdate(@RequestBody Training received, @RequestBody FetchRequest request) {
+		Training received = mapper.convertValue(node.get("training"), Training.class);
+		FetchRequest request =  mapper.convertValue(node.get("request"), FetchRequest.class);
 
         Training found = repository.findById(received.getId());
         if(found!=null &&
-                found.getUpdatingDeviceName().equals(request.getDeviceName()) &&
+                !found.getUpdatingDeviceName().equals(request.getDeviceName()) &&
                 found.getLastUpdate() > request.getLastUpdate()){
           received.setId(-1L);
           received.setName(received.getName()+"_"+request.getDeviceName());
