@@ -36,12 +36,7 @@ public class DropboxFileManager implements IFileManager {
 	@Override
 	public void storeFile(Training training, FileItem item) throws Exception {
 
-		try {
-			deleteFile(training);
-		} catch (Exception ignored) {
-		}
-
-		getClient().uploadFile("/" + training.getId() + ".xml", DbxWriteMode.add(), item.getSize(), item.getInputStream());
+		getClient().uploadFile("/" + training.getId() + ".xml", DbxWriteMode.force(), item.getSize(), item.getInputStream());
 	}
 
 	@Override
