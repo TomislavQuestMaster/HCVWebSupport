@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Learning AngularJS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js" type="text/javascript"></script>
+    <script src="app.js" type="text/javascript"></script>
+    <script src="controller.js" type="text/javascript"></script>
+    <script src='https://maps.googleapis.com/maps/api/js?sensor=false'></script>
+    <script src='underscore.min.js'></script>
+    <script src='angular-google-maps.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+</head>
+<body>
+<div id='content' ng-app='MyTutorialApp' ng-controller='MainController'>
+
+    <google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
+
+        <marker ng-repeat="marker in markers" coords="marker"></marker>
+
+    </google-map>
+
+
+</div>
+</body>
+</html>
