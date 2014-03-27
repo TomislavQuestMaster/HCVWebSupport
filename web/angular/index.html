@@ -15,7 +15,9 @@
 
     <google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
 
-        <marker ng-repeat="marker in markers" coords="marker"></marker>
+        <marker ng-repeat="marker in markers" coords="marker" events="markerClickEvent"></marker>
+
+        <polyline ng-repeat="line in lines" path="line"></polyline>
 
     </google-map>
 
