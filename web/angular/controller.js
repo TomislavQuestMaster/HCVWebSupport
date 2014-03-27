@@ -26,37 +26,37 @@ app.controller("MainController", function ($scope, $log) {
 
     $scope.selected = 0;
     $scope.lines = [];
-    $scope.begin={
-        latitude: 42.641900799999990000,
-        longitude: 18.106484899999940000
-    };
-    $scope.end={
-        latitude: 52.641900799999990000,
-        longitude: 18.106484899999940000
+    $scope.begin = {
+        location: {
+            latitude: 42.641900799999990000,
+            longitude: 18.106484899999940000
+        },
+        marker: null
     };
 
     $scope.markerClickEvent = {
         click: function (marker, eventName, args) {
 
-            if($scope.selected == 0){
-                $scope.begin = {
-                    latitude:  marker.getPosition().lat(),
+            if ($scope.selected == 0) {
+                $scope.begin.location = {
+                    latitude: marker.getPosition().lat(),
                     longitude: marker.getPosition().lng()
                 };
                 $scope.selected = 1;
+                $scope.begin.marker = marker;
                 marker.setAnimation(google.maps.Animation.BOUNCE);
             }
-            else if($scope.selected == 1){
-                $scope.end = {
-                    latitude:  marker.getPosition().lat(),
-                    longitude: marker.getPosition().lng()
-                };
+            else if ($scope.selected == 1) {
                 $scope.lines.push(
                     [
-                        $scope.begin,
-                        $scope.end
+                        $scope.begin.location,
+                        {
+                            latitude: marker.getPosition().lat(),
+                            longitude: marker.getPosition().lng()
+                        }
                     ]
                 );
+                $scope.begin.marker.setAnimation(null);
                 $scope.selected = 0;
             }
             $scope.$apply();
