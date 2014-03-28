@@ -44,12 +44,26 @@ app.controller("MainController", function ($scope, $http, $log) {
 
             //{ status:0, message:"hello"} {'Content-Type': 'application/json'}
             var postData = { status:0, message:"hello"};
-            $http.post('http://localhost:8080/hook', postData,{headers:{'Content-Type': 'application/json'}}
+            /*
+            $http.get('http://localhost:8080/hook', postData,{headers:{
+                    'Content-Type': 'application/json',
+                    'dataType': 'application/json',
+                    'Accept': 'application/json, text/javascript'}}
                 ).success(function(data, status, headers, config) {
-                    alert("aha");
+                    alert("yes");
+                    $log.log(data, status, headers, config);
                 }).error(function(data, status, headers, config) {
+                    alert("noo");
                     $log.log(data, status, headers, config);
                 });
+            */
+            $http.get('/app/hook').success(function (data, status) {
+                alert("yes");
+                $log.log(data);
+            }).error(function (data, status) {
+                alert("noo");
+                $log.log(data);
+            });
 
 
             if ($scope.selected == 0) {
