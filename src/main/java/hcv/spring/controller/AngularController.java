@@ -13,18 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class AngularController extends CorsCommon {
 
-	@RequestMapping(value = "/hook", method = RequestMethod.POST)
+	@RequestMapping(value = "/app/hook", method = RequestMethod.POST)
 	public @ResponseBody Response test(@RequestBody Response response) {
 
 		System.out.println(response.getMessage());
 
-		//return "bla";
 		return new Response(1,"Hello back");
 	}
 
-	@RequestMapping(value = "/app/hook", method = RequestMethod.GET)
-	public @ResponseBody Response teest() {
-
-		return new Response(1,"Hello back");
-	}
 }
