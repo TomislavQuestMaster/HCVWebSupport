@@ -14,7 +14,7 @@ public class AngularController extends CorsCommon{
 
 
 	@RequestMapping(value = "/hook", method = RequestMethod.POST)
-	public void test(@RequestBody String response) {
-		System.out.println(response);
+	public void test(@RequestBody Response response) {
+		System.out.println(response.getMessage());
 	}
 }

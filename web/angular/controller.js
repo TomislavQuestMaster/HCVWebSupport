@@ -43,8 +43,8 @@ app.controller("MainController", function ($scope, $http, $log) {
         click: function (marker, eventName, args) {
 
             //{ status:0, message:"hello"} {'Content-Type': 'application/json'}
-            var postData = {text: 'long blob of text'};
-            $http.post('http://localhost:8080/hook', 'long blob of text'
+            var postData = { status:0, message:"hello"};
+            $http.post('http://localhost:8080/hook', postData,{headers:{'Content-Type': 'application/json'}}
                 ).success(function(data, status, headers, config) {
                     alert("aha");
                 }).error(function(data, status, headers, config) {
