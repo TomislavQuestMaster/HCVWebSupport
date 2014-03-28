@@ -42,16 +42,15 @@ app.controller("MainController", function ($scope, $http, $log) {
     $scope.markerClickEvent = {
         click: function (marker, eventName, args) {
 
-            $http({
-                url: 'http://localhost:8080/hzook',
-                method: "POST",
-                data: { status:0, message:"hello"},
-                headers: {'Content-Type': 'application/json'}
-            }).success(function (data, status, headers, config) {
-                alert("aha");
-            }).error(function (data, status, headers, config) {
-                $log.log(data, status, headers, config);
-            });
+            //{ status:0, message:"hello"} {'Content-Type': 'application/json'}
+            var postData = {text: 'long blob of text'};
+            $http.post('http://localhost:8080/hook', 'long blob of text'
+                ).success(function(data, status, headers, config) {
+                    alert("aha");
+                }).error(function(data, status, headers, config) {
+                    $log.log(data, status, headers, config);
+                });
+
 
             if ($scope.selected == 0) {
                 $scope.begin.location = {

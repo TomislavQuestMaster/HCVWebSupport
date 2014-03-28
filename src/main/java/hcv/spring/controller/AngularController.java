@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author tdubravcevic
  */
 @Controller
-public class AngularController {
+public class AngularController extends CorsCommon{
+
 
 	@RequestMapping(value = "/hook", method = RequestMethod.POST)
-	public void test(@RequestBody Response response) {
-		System.out.println(response.getMessage());
+	public void test(@RequestBody String response) {
+		System.out.println(response);
 	}
 }

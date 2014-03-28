@@ -1,2 +1,1 @@
-
-var app = angular.module('MyTutorialApp',['google-maps']);
+var app = angular.module('MyTutorialApp', ['google-maps']);
