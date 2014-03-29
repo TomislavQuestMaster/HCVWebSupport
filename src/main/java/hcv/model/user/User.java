@@ -21,6 +21,10 @@ public class User {
 	private UserType userType;
 	private Integer clubId;
 
+    private String name;
+    private String surname;
+
+
 	public User() {
 	}
 

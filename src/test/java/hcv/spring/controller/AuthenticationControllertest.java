@@ -20,127 +20,127 @@ import static org.mockito.MockitoAnnotations.initMocks;
  * @author tdubravcevic
  */
 @RunWith(MockitoJUnitRunner.class)
-public class AuthenticationControllerTest {
+public class AuthenticationControllertest {
 
-	@InjectMocks
-	private AuthenticationController controller = new AuthenticationController();
+    @InjectMocks
+    private AuthenticationController controller = new AuthenticationController();
 
-	@Mock
-	private UserService service;
+    @Mock
+    private UserService service;
 
-	private Response response;
-	private User user;
+    private Response response;
+    private User user;
 
-	@Before
-	public void setUp() {
+    @Before
+    public void setUp() {
 
-		initMocks(this);
-	}
+        initMocks(this);
+    }
 
-	@Test
-	public void userIsRegisterIfHeIsNotFound() {
+    @Test
+    public void userIsRegisterIfHeIsNotFound() {
 
-		User user = new User("coach1", "1234", null, null, null);
-		givenUser(user);
-		givenFoundUser(null);
+        User user = new User("coach1", "1234", null, null, null);
+        givenUser(user);
+        givenFoundUser(null);
 
-		whenRegister();
+        whenRegister();
 
-		thenRegistrationSucceeded();
-	}
+        thenRegistrationSucceeded();
+    }
 
-	@Test
-	public void userFailsToRegisteredIfHeIsAlreadyRegistered() {
+    @Test
+    public void userFailsToRegisteredIfHeIsAlreadyRegistered() {
 
-		User user = new User("coach1", "1234", null, null, null);
-		givenUser(user);
-		givenFoundUser(user);
+        User user = new User("coach1", "1234", null, null, null);
+        givenUser(user);
+        givenFoundUser(user);
 
-		whenRegister();
+        whenRegister();
 
-		thenRegistrationFailed();
-	}
+        thenRegistrationFailed();
+    }
 
-	@Test
-	public void userIsAuthenticated() {
+    @Test
+    public void userIsAuthenticated() {
 
-		User user = new User("coach1", "1234", null, null, null);
-		givenUser(user);
-		givenFoundUser(user);
+        User user = new User("coach1", "1234", null, null, null);
+        givenUser(user);
+        givenFoundUser(user);
 
-		whenAuthenticate();
+        whenAuthenticate();
 
-		thenAuthenticationSucceeded();
-	}
+        thenAuthenticationSucceeded();
+    }
 
-	@Test
-	public void userFailsToAuthenticateWhenNotRegistered() {
+    @Test
+    public void userFailsToAuthenticateWhenNotRegistered() {
 
-		User user = new User("coach1", "1234", null, null, null);
-		givenUser(user);
-		givenFoundUser(null);
+        User user = new User("coach1", "1234", null, null, null);
+        givenUser(user);
+        givenFoundUser(null);
 
-		whenAuthenticate();
+        whenAuthenticate();
 
-		thenAuthenticationFailed("Verification failed, not found", 2);
-	}
+        thenAuthenticationFailed("Verification failed, not found", 2);
+    }
 
-	@Test
-	public void userFailsToAuthenticateWithWrongPassword() {
+    @Test
+    public void userFailsToAuthenticateWithWrongPassword() {
 
-		User user = new User("coach1", "1234", null, null, null);
-		User foundUser = new User("coach1", "12345", null, null, null);
-		givenUser(user);
-		givenFoundUser(foundUser);
+        User user = new User("coach1", "1234", null, null, null);
+        User foundUser = new User("coach1", "12345", null, null, null);
+        givenUser(user);
+        givenFoundUser(foundUser);
 
-		whenAuthenticate();
+        whenAuthenticate();
 
-		thenAuthenticationFailed("Verification failed, wrong password", 3);
-	}
+        thenAuthenticationFailed("Verification failed, wrong password", 3);
+    }
 
-	private void thenAuthenticationFailed(String message, Integer status) {
+    private void thenAuthenticationFailed(String message, Integer status) {
 
-		assertEquals(message, response.getMessage());
-		assertEquals(status, response.getStatus());
-	}
+        assertEquals(message, response.getMessage());
+        assertEquals(status, response.getStatus());
+    }
 
-	private void thenRegistrationFailed() {
+    private void thenRegistrationFailed() {
 
-		assertEquals("User exists", response.getMessage());
-		assertEquals(Integer.valueOf(1), response.getStatus());
-	}
+        assertEquals("User exists", response.getMessage());
+        assertEquals(Integer.valueOf(1), response.getStatus());
+    }
 
-	private void thenRegistrationSucceeded() {
+    private void thenRegistrationSucceeded() {
 
-		verify(service).create(eq(user));
-		assertEquals("Created user", response.getMessage());
-		assertEquals(Integer.valueOf(0), response.getStatus());
-	}
+        verify(service).create(eq(user));
+        assertEquals("Created user", response.getMessage());
+        assertEquals(Integer.valueOf(0), response.getStatus());
+    }
 
-	private void thenAuthenticationSucceeded() {
+    private void thenAuthenticationSucceeded() {
 
-		assertEquals("Verification succeeded", response.getMessage());
-		assertEquals(Integer.valueOf(0), response.getStatus());
-	}
+        assertEquals("Verification succeeded", response.getMessage());
+        assertEquals(Integer.valueOf(0), response.getStatus());
+    }
 
-	private void whenRegister() {
+    private void whenRegister() {
 
-		response = controller.registering(user);
-	}
+        response = controller.registering(user);
+    }
 
-	private void whenAuthenticate() {
+    private void whenAuthenticate() {
 
-		response = controller.verifying(user);
-	}
+        response = controller.verifying(user);
+    }
 
-	public void givenUser(User user) {
+    public void givenUser(User user) {
 
-		this.user = user;
-	}
+        this.user = user;
+    }
 
-	private void givenFoundUser(User user) {
+    private void givenFoundUser(User user) {
 
-		when(service.findByUsername(this.user.getUsername())).thenReturn(user);
-	}
+        when(service.findByUsername(this.user.getUsername())).thenReturn(user);
+    }
 
 }
