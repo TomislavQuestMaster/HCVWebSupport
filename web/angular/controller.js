@@ -17,6 +17,23 @@ app.controller("MainController", function ($scope, $http, $log) {
         }
     };
 
+    $scope.circle = {
+        center: {
+            latitude: 42.641900799999990000,
+            longitude: 18.106484899999940000
+        },
+        radius: 500000,
+        stroke: {
+            color: '#08B21F',
+            weight: 2,
+            opacity: 1
+        },
+        fill: {
+            color: '#08B21F',
+            opacity: 0.5
+        }
+    };
+
     $scope.markers = [
         {
             latitude: 42.641900799999990000,
@@ -42,15 +59,15 @@ app.controller("MainController", function ($scope, $http, $log) {
     $scope.markerClickEvent = {
         click: function (marker, eventName, args) {
 
-            var postData = { status:0, message:"hello"};
-            $http.post('/app/hook', postData,{headers:{
+            var postData = { status: 0, message: "hello"};
+            $http.post('/app/hook', postData, {headers: {
                     'Content-Type': 'application/json',
                     'dataType': 'application/json',
                     'Accept': 'application/json, text/javascript'}}
-                ).success(function(data, status, headers, config) {
+            ).success(function (data, status, headers, config) {
                     alert("yes");
                     $log.log(data, status, headers, config);
-                }).error(function(data, status, headers, config) {
+                }).error(function (data, status, headers, config) {
                     alert("noo");
                     $log.log(data, status, headers, config);
                 });

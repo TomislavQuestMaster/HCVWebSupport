@@ -22,9 +22,9 @@
     <div class="col-lg-8 col-md-8">
         <google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
 
-            <marker ng-repeat="marker in markers" coords="marker" events="markerClickEvent"></marker>
+            <marker ng-repeat="marker in markers" coords="marker.location" events="markerClickEvent"></marker>
+            <circle ng-repeat="marker in markers" center="marker.location" radius="circle.radius" fill="circle.fill" stroke="circle.stroke"></circle>
 
-            <polyline ng-repeat="line in lines" path="line"></polyline>
 
         </google-map>
     </div>

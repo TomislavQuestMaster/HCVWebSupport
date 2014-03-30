@@ -6,6 +6,23 @@ app.controller("CreatorController", function ($scope, $filter, $log) {
         return $scope.atomic;
     };
 
+    $scope.circle = {
+        center: {
+            latitude: 42.641900799999990000,
+            longitude: 18.106484899999940000
+        },
+        radius: 50,
+        stroke: {
+            color: '#08B21F',
+            weight: 2,
+            opacity: 1
+        },
+        fill: {
+            color: '#08B21F',
+            opacity: 0.5
+        }
+    };
+
     $scope.map = {
         center: {
             latitude: 42.641900799999990000,
@@ -25,24 +42,30 @@ app.controller("CreatorController", function ($scope, $filter, $log) {
 
     $scope.markers = [
         {
-            id:0,
-            latitude: 42.641900799999990000,
-            longitude: 18.106484899999940000
+            id: 0,
+            location: {
+                latitude: 42.641900799999990000,
+                longitude: 18.106484899999940000
+            }
         }
     ];
 
     $scope.hidden = "false";
     $scope.current = {
         id: 0,
-        latitude: 42.641900799999990000,
-        longitude: 18.106484899999940000
+        location: {
+            latitude: 42.641900799999990000,
+            longitude: 18.106484899999940000
+        }
     };
 
     $scope.addNew = function (lat, lon) {
         var marker = {
             id: $scope.getId(),
-            latitude: lat,
-            longitude: lon
+            location: {
+                latitude: lat,
+                longitude: lon
+            }
         };
         $scope.current = marker;
 
@@ -53,18 +76,20 @@ app.controller("CreatorController", function ($scope, $filter, $log) {
         click: function (marker, eventName, args) {
 
 
-            var items = $filter('filter')($scope.markers,{
-                                             latitude: marker.getPosition().lat(),
-                                             longitude: marker.getPosition().lng()});
+            var items = $filter('filter')($scope.markers, {
+                location: {
+                    latitude: marker.getPosition().lat(),
+                    longitude: marker.getPosition().lng()
+                }
+            });
             $scope.current = items[0];
             $scope.$apply();
         }
     };
 
     $scope.deleteMarker = function () {
-        $scope.markers.splice($scope.markers.indexOf($scope.current),1);
+        $scope.markers.splice($scope.markers.indexOf($scope.current), 1);
     };
-
 
 
 });
