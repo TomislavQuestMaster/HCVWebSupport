@@ -23,8 +23,7 @@
         <google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
 
             <marker ng-repeat="marker in markers" coords="marker.location" events="markerClickEvent"></marker>
-            <circle ng-repeat="marker in markers" center="marker.location" radius="circle.radius" fill="circle.fill" stroke="circle.stroke"></circle>
-
+            <circle ng-repeat="marker in markers" center="marker.location" radius="marker.radius" fill="circle.fill" stroke="circle.stroke"></circle>
 
         </google-map>
     </div>
@@ -42,8 +41,10 @@
         <form ng-hide="hidden">
             <fieldset>
                 <legend>Location</legend>
-                <input type="number" id="lat" placeholder="Latitude" value="{{current.latitude}}">
-                <input type="number" id="lon" placeholder="Longitude" value="{{current.longitude}}">
+                <input type="number" id="lat" placeholder="Latitude" value="{{current.location.latitude}}">
+                <input type="number" id="lon" placeholder="Longitude" value="{{current.location.longitude}}">
+                <input type="range" id="radius" step="1" max="100" min="1" ng-model="current.radius">
+                {{current.radius}}
             </fieldset>
             <button type="button" class="btn" ng-click="deleteMarker()">Delete</button>
         </form>

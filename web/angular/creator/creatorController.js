@@ -43,6 +43,7 @@ app.controller("CreatorController", function ($scope, $filter, $log) {
     $scope.markers = [
         {
             id: 0,
+            radius: 50,
             location: {
                 latitude: 42.641900799999990000,
                 longitude: 18.106484899999940000
@@ -53,15 +54,18 @@ app.controller("CreatorController", function ($scope, $filter, $log) {
     $scope.hidden = "false";
     $scope.current = {
         id: 0,
+        radius: 50,
         location: {
             latitude: 42.641900799999990000,
             longitude: 18.106484899999940000
         }
     };
 
+
     $scope.addNew = function (lat, lon) {
         var marker = {
             id: $scope.getId(),
+            radius: 50,
             location: {
                 latitude: lat,
                 longitude: lon
@@ -75,12 +79,9 @@ app.controller("CreatorController", function ($scope, $filter, $log) {
     $scope.markerClickEvent = {
         click: function (marker, eventName, args) {
 
-
-            var items = $filter('filter')($scope.markers, {
-                location: {
-                    latitude: marker.getPosition().lat(),
-                    longitude: marker.getPosition().lng()
-                }
+            var items = $filter('locationFilter')($scope.markers, {
+                latitude: marker.getPosition().lat(),
+                longitude: marker.getPosition().lng()
             });
             $scope.current = items[0];
             $scope.$apply();
