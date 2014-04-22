@@ -51,6 +51,7 @@ public class SynchronizationController {
         }
 
         received.setLastUpdate((new Date()).getTime());
+		received.setUpdatingDeviceName("ios");
         received = repository.save(received);
         return new Response(received.getId().intValue(), "Update successful");  //TODO different id returning
     }

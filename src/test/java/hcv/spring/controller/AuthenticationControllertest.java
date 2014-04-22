@@ -20,7 +20,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
  * @author tdubravcevic
  */
 @RunWith(MockitoJUnitRunner.class)
-public class AuthenticationControllerTest {
+public class AuthenticationControllertest {
 
 	@InjectMocks
 	private AuthenticationController controller = new AuthenticationController();

@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Tomo.
@@ -21,6 +23,15 @@ public class Training {
     private String owner;
     private Long lastUpdate;
     private String updatingDeviceName;
+
+	private String description;
+	private String keypoints;
+	private ArrayList<TrainingTag> tags;
+	private ArrayList<TrainingLevel> levels;
+	private Short stress;
+	private Short technics;
+	private Short tactics;
+	private Short fun;
 
     public Training() {
     }
@@ -74,4 +85,84 @@ public class Training {
     public void setUpdatingDeviceName(String updatingDeviceName) {
         this.updatingDeviceName = updatingDeviceName;
     }
+
+	public String getDescription() {
+
+		return description;
+	}
+
+	public void setDescription(String description) {
+
+		this.description = description;
+	}
+
+	public String getKeypoints() {
+
+		return keypoints;
+	}
+
+	public void setKeypoints(String keypoints) {
+
+		this.keypoints = keypoints;
+	}
+
+	public List<TrainingTag> getTags() {
+
+		return tags;
+	}
+
+	public void setTags(ArrayList<TrainingTag> tags) {
+
+		this.tags = tags;
+	}
+
+	public List<TrainingLevel> getLevels() {
+
+		return levels;
+	}
+
+	public void setLevels(ArrayList<TrainingLevel> levels) {
+
+		this.levels = levels;
+	}
+
+	public Short getStress() {
+
+		return stress;
+	}
+
+	public void setStress(Short stress) {
+
+		this.stress = stress;
+	}
+
+	public Short getTechnics() {
+
+		return technics;
+	}
+
+	public void setTechnics(Short technics) {
+
+		this.technics = technics;
+	}
+
+	public Short getTactics() {
+
+		return tactics;
+	}
+
+	public void setTactics(Short tactics) {
+
+		this.tactics = tactics;
+	}
+
+	public Short getFun() {
+
+		return fun;
+	}
+
+	public void setFun(Short fun) {
+
+		this.fun = fun;
+	}
 }
