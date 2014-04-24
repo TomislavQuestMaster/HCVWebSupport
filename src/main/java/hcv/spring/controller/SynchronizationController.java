@@ -73,7 +73,15 @@ public class SynchronizationController {
 	@RequestMapping(value = "/fetch", method = RequestMethod.POST)
 	public @ResponseBody List<Training> fetch(@RequestBody FetchRequest request) {
 
-		return repository.getUnsyncedTrainings(request.getLastUpdate(), request.getDeviceName());
+		//return repository.getUnsyncedTrainings(request.getLastUpdate(), request.getDeviceName());
+		return repository.findByOwner(request.getUser());
+	}
+
+	@RequestMapping(value = "/fetchAll", method = RequestMethod.POST)
+	public @ResponseBody List<Training> fetchAll() {
+
+		//return repository.getUnsyncedTrainings(request.getLastUpdate(), request.getDeviceName());
+		return repository.findAll();
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -108,6 +116,12 @@ public class SynchronizationController {
         }
 
 		return new FileSystemResource(manager.fetchFile(training));
+	}
+
+	@RequestMapping(value = "/reset", method = RequestMethod.GET)
+	public void reset() {
+
+		repository.deleteAll();
 	}
 
 }

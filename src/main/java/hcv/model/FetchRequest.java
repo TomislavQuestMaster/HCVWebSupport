@@ -6,6 +6,7 @@ package hcv.model;
 public class FetchRequest {
 
     private String deviceName;
+	private String user;
     private Long lastUpdate;
 
     public String getDeviceName() {
@@ -23,4 +24,14 @@ public class FetchRequest {
     public void setLastUpdate(Long lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
+
+	public String getUser() {
+
+		return user;
+	}
+
+	public void setUser(String user) {
+
+		this.user = user;
+	}
 }

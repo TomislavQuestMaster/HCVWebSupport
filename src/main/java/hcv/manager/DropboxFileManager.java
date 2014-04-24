@@ -22,10 +22,10 @@ public class DropboxFileManager implements IFileManager {
 	@Override
 	public File fetchFile(Training training) {
 
-		File file = new File(training.getId() + ".xml");
+		File file = new File(training.getId() + ".txt");
 
 		try {
-			getClient().getFile("/eclipse-formatter.xml", null, new FileOutputStream(file));
+			getClient().getFile("/"+training.getId()+".txt", null, new FileOutputStream(file));
 		} catch (Exception e) {
 			return null;
 		}
@@ -36,13 +36,13 @@ public class DropboxFileManager implements IFileManager {
 	@Override
 	public void storeFile(Training training, FileItem item) throws Exception {
 
-		getClient().uploadFile("/" + training.getId() + ".xml", DbxWriteMode.force(), item.getSize(), item.getInputStream());
+		getClient().uploadFile("/" + training.getId() + ".txt", DbxWriteMode.force(), item.getSize(), item.getInputStream());
 	}
 
 	@Override
 	public void deleteFile(Training training) throws Exception {
 
-		getClient().delete("/" + training.getId() + ".xml");
+		getClient().delete("/" + training.getId() + ".txt");
 	}
 
 	private DbxClient getClient() {

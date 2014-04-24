@@ -18,4 +18,6 @@ public interface TrainingRepository extends JpaRepository<Training, Long> {
 
 	public Training findByName(String name);
 
+	public List<Training> findByOwner(String owner);
+
 }
