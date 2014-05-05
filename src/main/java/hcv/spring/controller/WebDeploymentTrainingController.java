@@ -24,33 +24,44 @@ public class WebDeploymentTrainingController {
 	private TrainingRepository repository;
 
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public
-	@ResponseBody
-	Response insert(@RequestBody Training training) throws IOException {
+	public void insert(@RequestBody Training training) throws IOException {
 
 		repository.save(training);
-		return new Response(1, "ok");
+	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public void delete(@RequestBody Training training) throws IOException {
+
+		repository.delete(training);
 	}
 
 	@RequestMapping(value = "/count", method = RequestMethod.GET)
-	public
-	@ResponseBody
-	Long count() throws IOException {
+	public @ResponseBody Long count() throws IOException {
 
 		//FIXME count by username
 		return repository.count();
 	}
 
 	@RequestMapping(value = "/filter", method = RequestMethod.POST)
-	public
-	@ResponseBody
-	List<Training> filter(DatabaseFilter filter) throws IOException {
+	public @ResponseBody List<Training> filter(DatabaseFilter filter) throws IOException {
 
 		List<Training> filtered = filterRepository(filter);
 
 		sort(filter, filtered);
 
 		return filtered;
+	}
+
+	@RequestMapping(value = "/byName", method = RequestMethod.POST)
+	public @ResponseBody Training getOneByName(String name) throws IOException {
+
+		return repository.findByName(name);
+	}
+
+	@RequestMapping(value = "/byId", method = RequestMethod.POST)
+	public @ResponseBody Training getOneById(Long id) throws IOException {
+
+		return repository.findById(id);
 	}
 
 	private List<Training> filterRepository(DatabaseFilter filter) {
