@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -164,5 +165,45 @@ public class Training {
 	public void setFun(Short fun) {
 
 		this.fun = fun;
+	}
+
+	public static class StressComparator implements Comparator<Training> {
+
+
+		public int compare(Training o1, Training o2) {
+			return o1.getStress().compareTo(o2.getStress());
+		}
+	}
+
+	public static class TechnicsComparator implements Comparator<Training> {
+
+
+		public int compare(Training o1, Training o2) {
+			return o1.getTechnics().compareTo(o2.getTechnics());
+		}
+	}
+
+	public static class TacticsComparator implements Comparator<Training> {
+
+
+		public int compare(Training o1, Training o2) {
+			return o1.getTactics().compareTo(o2.getTactics());
+		}
+	}
+
+	public static class FunComparator implements Comparator<Training> {
+
+
+		public int compare(Training o1, Training o2) {
+			return o1.getFun().compareTo(o2.getFun());
+		}
+	}
+
+	public static class NameComparator implements Comparator<Training> {
+
+
+		public int compare(Training o1, Training o2) {
+			return o1.getName().compareTo(o2.getName());
+		}
 	}
 }
