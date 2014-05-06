@@ -29,7 +29,7 @@ public class WebDeploymentTrainingController {
 		repository.save(training);
 	}
 
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/remove", method = RequestMethod.POST)
 	public void delete(@RequestBody Training training) throws IOException {
 
 		repository.delete(training);
@@ -66,9 +66,10 @@ public class WebDeploymentTrainingController {
 
 	private List<Training> filterRepository(DatabaseFilter filter) {
 
-		Iterable<Training> result = repository.findAll(training.tags.in((ArrayList<TrainingTag>) filter.getTags())
-																	.and(training.levels.in((ArrayList<TrainingLevel>) filter.getLevels()
-																						   )));
+		Iterable<Training> result = repository.findAll(training.levels.in(filter.getLevels()));
+
+		//Iterable<Training> result = repository.findAll(training.tags.in((ArrayList<TrainingTag>) filter.getTags())
+		//														.and(training.levels.in((ArrayList<TrainingLevel>) filter.getLevels())));
 
 		List<Training> filtered = new ArrayList<Training>();
 		addAll(filtered, result.iterator());

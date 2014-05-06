@@ -1,5 +1,6 @@
 package hcv.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,28 +8,33 @@ import java.util.List;
  */
 public class DatabaseFilter {
 
-	private List<TrainingTag> tags;
-	private List<TrainingLevel> levels;
+	private ArrayList<TrainingTag> tags;
+	private ArrayList<TrainingLevel> levels;
 	//private List<TrainingType> types;
 	private SortType sortBy;
 	private SortDirection direction;
 
-	public List<TrainingTag> getTags() {
+	public DatabaseFilter() {
+		tags = new ArrayList<TrainingTag>();
+		levels = new ArrayList<TrainingLevel>();
+	}
+
+	public ArrayList<TrainingTag> getTags() {
 
 		return tags;
 	}
 
-	public void setTags(List<TrainingTag> tags) {
+	public void setTags(ArrayList<TrainingTag> tags) {
 
 		this.tags = tags;
 	}
 
-	public List<TrainingLevel> getLevels() {
+	public ArrayList<TrainingLevel> getLevels() {
 
 		return levels;
 	}
 
-	public void setLevels(List<TrainingLevel> levels) {
+	public void setLevels(ArrayList<TrainingLevel> levels) {
 
 		this.levels = levels;
 	}
@@ -51,5 +57,13 @@ public class DatabaseFilter {
 	public void setDirection(SortDirection direction) {
 
 		this.direction = direction;
+	}
+
+	public void addTag(TrainingTag tag){
+		tags.add(tag);
+	}
+
+	public void addLevel(TrainingLevel level){
+		levels.add(level);
 	}
 }

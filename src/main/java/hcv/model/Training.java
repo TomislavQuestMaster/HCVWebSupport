@@ -35,6 +35,8 @@ public class Training {
 	private Short fun;
 
     public Training() {
+		tags = new ArrayList<TrainingTag>();
+		levels = new ArrayList<TrainingLevel>();
     }
 
 	public Long getId() {
@@ -165,6 +167,14 @@ public class Training {
 	public void setFun(Short fun) {
 
 		this.fun = fun;
+	}
+
+	public void addTag(TrainingTag tag){
+		tags.add(tag);
+	}
+
+	public void addLevel(TrainingLevel level){
+		levels.add(level);
 	}
 
 	public static class StressComparator implements Comparator<Training> {
