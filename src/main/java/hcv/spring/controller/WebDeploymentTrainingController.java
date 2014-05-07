@@ -1,8 +1,12 @@
 package hcv.spring.controller;
 
+import com.dropbox.core.DbxException;
 import com.mysema.query.types.expr.BooleanExpression;
 import hcv.data.repositories.TrainingRepository;
+import hcv.manager.FileManager;
+import hcv.manager.IFileManager;
 import hcv.model.*;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.*;
 
 import static com.mysema.query.collections.MiniApi.*;
@@ -27,20 +33,25 @@ public class WebDeploymentTrainingController {
 	@Autowired
 	private TrainingRepository repository;
 
+    @Autowired
+    private IFileManager manager;
+
 	public void executeQuery(String query){
 		//repository.findAll(query);
 	}
 
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public void insert(@RequestBody Training training) throws IOException {
+	public @ResponseBody String insert(@RequestBody Training training) throws IOException {
 
 		repository.save(training);
+        return "OK";
 	}
 
 	@RequestMapping(value = "/remove", method = RequestMethod.POST)
-	public void delete(@RequestBody Training training) throws IOException {
+	public @ResponseBody String delete(@RequestBody Training training) throws IOException {
 
 		repository.delete(training);
+        return "OK";
 	}
 
 	@RequestMapping(value = "/count", method = RequestMethod.GET)
@@ -72,15 +83,38 @@ public class WebDeploymentTrainingController {
 		return repository.findById(id);
 	}
 
+    @RequestMapping(value = "/saveFile", method = RequestMethod.POST)
+    public @ResponseBody String saveFile(@RequestBody String data) throws IOException, DbxException {
+
+
+        manager.storeData(data);
+
+        return "OK";
+    }
+
+    @RequestMapping(value = "/loadFile", method = RequestMethod.POST)
+    public @ResponseBody String loadFile(@RequestBody Long name) throws IOException, DbxException {
+
+        Training training = new Training();
+        training.setId(name);
+
+        return FileUtils.readFileToString(manager.fetchFile(training));
+    }
+
 	private List<Training> filterRepository(DatabaseFilter filter) {
 
-		BooleanExpression expression = training.levels.eq(filter.getLevels());
+		Iterable<Training> result = repository.findAll(training.owner.eq(filter.getOwner()));
 
-		System.out.println(expression.stringValue().toString());
+        List<Training> filtered = new ArrayList<Training>();
 
-		Iterable<Training> result = repository.findAll();
+        for(Training training : result){
 
-		//ARRRGH
+            if(training.getLevels().containsAll(filter.getLevels()) || training.getTags().containsAll(filter.getTags())){
+                    filtered.add(training);
+            }
+
+        }
+
 		/*
 		TrainingLevel c = alias(TrainingLevel.class, "level");
 		for (String name : from()
@@ -88,12 +122,6 @@ public class WebDeploymentTrainingController {
 			System.out.println(name);
 		}
 		*/
-
-		//Iterable<Training> result = repository.findAll(training.tags.in((ArrayList<TrainingTag>) filter.getTags())
-		//														.and(training.levels.in((ArrayList<TrainingLevel>) filter.getLevels())));
-
-		List<Training> filtered = new ArrayList<Training>();
-		addAll(filtered, result.iterator());
 		return filtered;
 	}
 

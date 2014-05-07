@@ -1,10 +1,12 @@
 package hcv.manager;
 
+import com.dropbox.core.DbxException;
 import hcv.AppProperties;
 import hcv.model.Training;
 import org.apache.commons.fileupload.FileItem;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author tdubravcevic
@@ -36,5 +38,10 @@ public class FileManager implements IFileManager{
         if(!file.delete()){
             throw new Exception("Delete failed");
         }
+    }
+
+    @Override
+    public void storeData(String data) throws IOException, DbxException {
+
     }
 }

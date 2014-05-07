@@ -1,15 +1,10 @@
 package hcv.manager;
 
-import com.dropbox.core.DbxClient;
-import com.dropbox.core.DbxEntry;
-import com.dropbox.core.DbxRequestConfig;
-import com.dropbox.core.DbxWriteMode;
+import com.dropbox.core.*;
 import hcv.model.Training;
 import org.apache.commons.fileupload.FileItem;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.Locale;
 
 /**
@@ -44,6 +39,13 @@ public class DropboxFileManager implements IFileManager {
 
 		getClient().delete("/" + training.getId() + ".txt");
 	}
+
+    @Override
+    public void storeData(String data) throws IOException, DbxException {
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(data.getBytes());
+        getClient().uploadFile("/" + "TEST" + ".txt", DbxWriteMode.force(), data.length(), inputStream);
+    }
 
 	private DbxClient getClient() {
 
