@@ -44,10 +44,9 @@ public class WebDeploymentTrainingController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public
     @ResponseBody
-    String insert(@RequestBody Training training) throws IOException {
+    Long insert(@RequestBody Training training) throws IOException {
 
-        repository.save(training);
-        return "OK";
+        return repository.save(training).getId();
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
