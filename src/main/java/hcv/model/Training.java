@@ -34,6 +34,10 @@ public class Training {
 	private Short tactics;
 	private Short fun;
 
+    private Short defense;
+    private Short offense;
+    private Short goalie;
+
     public Training() {
 		tags = new ArrayList<TrainingTag>();
 		levels = new ArrayList<TrainingLevel>();
@@ -177,7 +181,31 @@ public class Training {
 		levels.add(level);
 	}
 
-	public static class StressComparator implements Comparator<Training> {
+    public Short getDefense() {
+        return defense;
+    }
+
+    public void setDefense(Short defense) {
+        this.defense = defense;
+    }
+
+    public Short getOffense() {
+        return offense;
+    }
+
+    public void setOffense(Short offense) {
+        this.offense = offense;
+    }
+
+    public Short getGoalie() {
+        return goalie;
+    }
+
+    public void setGoalie(Short goalie) {
+        this.goalie = goalie;
+    }
+
+    public static class StressComparator implements Comparator<Training> {
 
 
 		public int compare(Training o1, Training o2) {
@@ -208,6 +236,30 @@ public class Training {
 			return o1.getFun().compareTo(o2.getFun());
 		}
 	}
+
+    public static class DefenseComparator implements Comparator<Training> {
+
+
+        public int compare(Training o1, Training o2) {
+            return o1.getDefense().compareTo(o2.getDefense());
+        }
+    }
+
+    public static class OffenseComparator implements Comparator<Training> {
+
+
+        public int compare(Training o1, Training o2) {
+            return o1.getOffense().compareTo(o2.getOffense());
+        }
+    }
+
+    public static class GoalieComparator implements Comparator<Training> {
+
+
+        public int compare(Training o1, Training o2) {
+            return o1.getGoalie().compareTo(o2.getGoalie());
+        }
+    }
 
 	public static class NameComparator implements Comparator<Training> {
 
