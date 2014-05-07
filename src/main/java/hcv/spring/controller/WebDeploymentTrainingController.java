@@ -1,5 +1,6 @@
 package hcv.spring.controller;
 
+import com.mysema.query.types.expr.BooleanExpression;
 import hcv.data.repositories.TrainingRepository;
 import hcv.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
 import java.util.*;
 
+import static com.mysema.query.collections.MiniApi.*;
+import static com.mysema.query.alias.Alias.*;
+
 import static hcv.model.QTraining.*;
 
 /**
@@ -22,6 +26,10 @@ public class WebDeploymentTrainingController {
 
 	@Autowired
 	private TrainingRepository repository;
+
+	public void executeQuery(String query){
+		//repository.findAll(query);
+	}
 
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public void insert(@RequestBody Training training) throws IOException {
@@ -43,7 +51,7 @@ public class WebDeploymentTrainingController {
 	}
 
 	@RequestMapping(value = "/filter", method = RequestMethod.POST)
-	public @ResponseBody List<Training> filter(DatabaseFilter filter) throws IOException {
+	public @ResponseBody List<Training> filter(@RequestBody DatabaseFilter filter) throws IOException {
 
 		List<Training> filtered = filterRepository(filter);
 
@@ -66,7 +74,20 @@ public class WebDeploymentTrainingController {
 
 	private List<Training> filterRepository(DatabaseFilter filter) {
 
-		Iterable<Training> result = repository.findAll(training.levels.in(filter.getLevels()));
+		BooleanExpression expression = training.levels.eq(filter.getLevels());
+
+		System.out.println(expression.stringValue().toString());
+
+		Iterable<Training> result = repository.findAll();
+
+		//ARRRGH
+		/*
+		TrainingLevel c = alias(TrainingLevel.class, "level");
+		for (String name : from()
+				.list($(c.toString()))){
+			System.out.println(name);
+		}
+		*/
 
 		//Iterable<Training> result = repository.findAll(training.tags.in((ArrayList<TrainingTag>) filter.getTags())
 		//														.and(training.levels.in((ArrayList<TrainingLevel>) filter.getLevels())));

@@ -28,7 +28,6 @@ import java.util.Properties;
 @EnableWebMvc
 @PropertySource("classpath:cloudbees/application.properties")
 @Import(DatabaseConfig.class)
-@ProductionProfile
 public class WebAppConfig {
 
 	@Bean
