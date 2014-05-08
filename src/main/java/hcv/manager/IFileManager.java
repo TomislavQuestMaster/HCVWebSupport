@@ -1,6 +1,7 @@
 package hcv.manager;
 
 import com.dropbox.core.DbxException;
+import hcv.model.FileRequest;
 import hcv.model.Training;
 import org.apache.commons.fileupload.FileItem;
 
@@ -18,5 +19,5 @@ public interface IFileManager {
 
     void deleteFile(Training training) throws Exception;
 
-    void storeData(String data) throws IOException, DbxException;
+    void storeData(FileRequest data) throws IOException, DbxException;
 }

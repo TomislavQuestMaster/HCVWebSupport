@@ -2,6 +2,7 @@ package hcv.manager;
 
 import com.dropbox.core.DbxException;
 import hcv.AppProperties;
+import hcv.model.FileRequest;
 import hcv.model.Training;
 import org.apache.commons.fileupload.FileItem;
 
@@ -41,7 +42,7 @@ public class FileManager implements IFileManager{
     }
 
     @Override
-    public void storeData(String data) throws IOException, DbxException {
+    public void storeData(FileRequest data) throws IOException, DbxException {
 
     }
 }

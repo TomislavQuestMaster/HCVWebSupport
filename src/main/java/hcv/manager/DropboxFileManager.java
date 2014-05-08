@@ -1,6 +1,7 @@
 package hcv.manager;
 
 import com.dropbox.core.*;
+import hcv.model.FileRequest;
 import hcv.model.Training;
 import org.apache.commons.fileupload.FileItem;
 
@@ -41,10 +42,10 @@ public class DropboxFileManager implements IFileManager {
 	}
 
     @Override
-    public void storeData(String data) throws IOException, DbxException {
+    public void storeData(FileRequest request) throws IOException, DbxException {
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(data.getBytes());
-        getClient().uploadFile("/" + "TEST" + ".txt", DbxWriteMode.force(), data.length(), inputStream);
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(request.getData().getBytes());
+        getClient().uploadFile("/" + request.getName() + ".txt", DbxWriteMode.force(), request.getData().length(), inputStream);
     }
 
 	private DbxClient getClient() {

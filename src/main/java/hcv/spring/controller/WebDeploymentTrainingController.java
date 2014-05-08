@@ -98,7 +98,7 @@ public class WebDeploymentTrainingController {
     @RequestMapping(value = "/saveFile", method = RequestMethod.POST)
     public
     @ResponseBody
-    String saveFile(@RequestBody String data) throws IOException, DbxException {
+    String saveFile(@RequestBody FileRequest data) throws IOException, DbxException {
 
 
         manager.storeData(data);
@@ -115,7 +115,7 @@ public class WebDeploymentTrainingController {
         training.setId(name);
 
         return FileUtils.readFileToString(manager.fetchFile(training));
-    }
+	}
 
     private List<Training> filterRepository(DatabaseFilter filter) {
 
