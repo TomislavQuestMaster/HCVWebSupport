@@ -8,7 +8,6 @@ import hcv.manager.IFileManager;
 import hcv.model.FetchRequest;
 import hcv.model.Response;
 import hcv.model.Training;
-import hcv.model.UpdateRequest;
 import org.apache.commons.fileupload.FileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -42,18 +41,29 @@ public class SynchronizationController {
 		Training received = mapper.convertValue(node.get("training"), Training.class);
 		FetchRequest request =  mapper.convertValue(node.get("request"), FetchRequest.class);
 
-        Training found = repository.findById(received.getId());
-        if(found!=null &&
-                !found.getUpdatingDeviceName().equals(request.getDeviceName()) &&
-                found.getLastUpdate() > request.getLastUpdate()){
+        if(trainingIsConflicted(repository.findById(received.getId()), request)){
           received.setId(-1L);
           received.setName(received.getName()+"_"+request.getDeviceName());
         }
 
         received.setLastUpdate((new Date()).getTime());
-		received.setUpdatingDeviceName("ios");
+		received.setUpdatingDeviceName(request.getDeviceName());
         received = repository.save(received);
-        return new Response(received.getId().intValue(), "Update successful");  //TODO different id returning
+
+        return new Response(received.getId().intValue(), "Update successful");
+    }
+
+    private boolean trainingIsConflicted(Training fromDatabase, FetchRequest request){
+
+        if(fromDatabase == null){
+            return false;
+        }
+
+        if(fromDatabase.getUpdatingDeviceName().equals(request.getDeviceName())){
+            return false;
+        }
+
+        return fromDatabase.getLastUpdate() > request.getLastUpdate();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
