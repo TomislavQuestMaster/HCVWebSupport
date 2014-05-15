@@ -1,9 +1,6 @@
 package hcv.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -25,10 +22,14 @@ public class Training {
     private Long lastUpdate;
     private String updatingDeviceName;
 
+    @Column(length = 1000)
 	private String description;
+    @Column(length = 1000)
 	private String keypoints;
+    @Column(length = 10000)
 	private ArrayList<TrainingTag> tags;
-	private ArrayList<TrainingLevel> levels;
+    @Column(length = 10000)
+    private ArrayList<TrainingLevel> levels;
 	private Short stress;
 	private Short technics;
 	private Short tactics;
