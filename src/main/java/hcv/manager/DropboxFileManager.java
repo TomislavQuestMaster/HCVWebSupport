@@ -21,7 +21,7 @@ public class DropboxFileManager implements IFileManager {
 		File file = new File(training.getId() + ".txt");
 
 		try {
-			getClient().getFile("/"+training.getId()+".txt", null, new FileOutputStream(file));
+			getClient().getFile("/test/"+training.getId()+".txt", null, new FileOutputStream(file));
 		} catch (Exception e) {
 			return null;
 		}
@@ -32,21 +32,21 @@ public class DropboxFileManager implements IFileManager {
 	@Override
 	public void storeFile(Training training, FileItem item) throws Exception {
 
-		getClient().uploadFile("/" + training.getId() + ".txt", DbxWriteMode.force(), item.getSize(), item.getInputStream());
+		getClient().uploadFile("/test/" + training.getId() + ".txt", DbxWriteMode.force(), item.getSize(), item.getInputStream());
 	}
 
 	@Override
 	public void deleteFile(Training training) throws Exception {
 
-		getClient().delete("/" + training.getId() + ".txt");
+		getClient().delete("/test/" + training.getId() + ".txt");
 	}
 
-    @Override
-    public void storeData(FileRequest request) throws IOException, DbxException {
+	@Override
+	public void storeData(FileRequest request) throws IOException, DbxException {
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(request.getData().getBytes());
-        getClient().uploadFile("/" + request.getName() + ".txt", DbxWriteMode.force(), request.getData().length(), inputStream);
-    }
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(request.getData().getBytes());
+		getClient().uploadFile("/test/" + request.getName() + ".txt", DbxWriteMode.force(), request.getData().length(), inputStream);
+	}
 
 	private DbxClient getClient() {
 

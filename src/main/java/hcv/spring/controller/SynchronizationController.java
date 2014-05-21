@@ -8,6 +8,7 @@ import hcv.manager.IFileManager;
 import hcv.model.FetchRequest;
 import hcv.model.Response;
 import hcv.model.Training;
+import hcv.model.UpdateRequest;
 import org.apache.commons.fileupload.FileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -32,8 +33,8 @@ public class SynchronizationController {
 	@Autowired
 	private IFileManager manager;
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public @ResponseBody Response newUpdate(@RequestBody String body) throws IOException {
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public @ResponseBody Response newUpdate(@RequestBody String body) throws IOException {
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode node = mapper.readTree(body);
@@ -41,50 +42,39 @@ public class SynchronizationController {
 		Training received = mapper.convertValue(node.get("training"), Training.class);
 		FetchRequest request =  mapper.convertValue(node.get("request"), FetchRequest.class);
 
-        if(trainingIsConflicted(repository.findById(received.getId()), request)){
-          received.setId(-1L);
-          received.setName(received.getName()+"_"+request.getDeviceName());
-        }
+		Training found = repository.findById(received.getId());
+		if(found!=null &&
+				!found.getUpdatingDeviceName().equals(request.getDeviceName()) &&
+				found.getLastUpdate() > request.getLastUpdate()){
+			received.setId(-1L);
+			received.setName(received.getName()+"_"+request.getDeviceName());
+		}
 
-        received.setLastUpdate((new Date()).getTime());
+		received.setLastUpdate((new Date()).getTime());
 		received.setUpdatingDeviceName(request.getDeviceName());
-        received = repository.save(received);
+		received = repository.save(received);
+		return new Response(received.getId().intValue(), "Update successful");  //TODO different id returning
+	}
 
-        return new Response(received.getId().intValue(), "Update successful");
-    }
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public @ResponseBody Response delete(@RequestBody Training received) {
 
-    private boolean trainingIsConflicted(Training fromDatabase, FetchRequest request){
+		repository.delete(received.getId());
 
-        if(fromDatabase == null){
-            return false;
-        }
+		try {
+			manager.deleteFile(received);
+		} catch (Exception e) {
+			return new Response(7, "Delete failed");
+		}
 
-        if(fromDatabase.getUpdatingDeviceName().equals(request.getDeviceName())){
-            return false;
-        }
-
-        return fromDatabase.getLastUpdate() > request.getLastUpdate();
-    }
-
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public @ResponseBody Response delete(@RequestBody Training received) {
-
-        repository.delete(received.getId());
-
-        try {
-            manager.deleteFile(received);
-        } catch (Exception e) {
-            return new Response(7, "Delete failed");
-        }
-
-        return new Response(0, "Delete successful");
-    }
+		return new Response(0, "Delete successful");
+	}
 
 	@RequestMapping(value = "/fetch", method = RequestMethod.POST)
 	public @ResponseBody List<Training> fetch(@RequestBody FetchRequest request) {
 
-		//return repository.getUnsyncedTrainings(request.getLastUpdate(), request.getDeviceName());
-		return repository.findByOwner(request.getUser());
+		return repository.getUnsyncedTrainings(request.getLastUpdate(), request.getDeviceName());
+		//return repository.findByOwner(request.getUser());
 	}
 
 	@RequestMapping(value = "/fetchAll", method = RequestMethod.POST)
@@ -107,13 +97,13 @@ public class SynchronizationController {
 		}
 
 		Training training = repository.findById(Long.decode(item.getName()));
-        try {
-            manager.storeFile(training, item);
-        } catch (Exception e) {
-            return new Response(6, "Upload failed: " + e.getMessage());
-        }
+		try {
+			manager.storeFile(training, item);
+		} catch (Exception e) {
+			return new Response(6, "Upload failed: " + e.getMessage());
+		}
 
-        return new Response(0, "Upload successful");
+		return new Response(0, "Upload successful");
 	}
 
 	@RequestMapping(value = "/download/{file_id}", method = RequestMethod.GET)
@@ -121,9 +111,9 @@ public class SynchronizationController {
 
 		Training training = repository.findById(fileId);
 
-        if(training == null){
-            throw new FileNotFoundException("No file with uid: " + fileId);
-        }
+		if(training == null){
+			throw new FileNotFoundException("No file with uid: " + fileId);
+		}
 
 		return new FileSystemResource(manager.fetchFile(training));
 	}
