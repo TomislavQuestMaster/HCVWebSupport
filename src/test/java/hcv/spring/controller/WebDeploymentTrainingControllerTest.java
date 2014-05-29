@@ -6,6 +6,7 @@ import hcv.model.Training;
 import hcv.model.TrainingLevel;
 import hcv.spring.config.SystemTestConfiguration;
 import hcv.utils.TestProfile;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;
@@ -21,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author tdubravcevic
  */
+@Ignore
 @ContextConfiguration(classes = SystemTestConfiguration.class)
 @ActiveProfiles(TestProfile.value)
 @RunWith(SpringJUnit4ClassRunner.class)
