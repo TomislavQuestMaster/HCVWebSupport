@@ -1,6 +1,7 @@
 package hcv.spring.config;
 
 import hcv.manager.DropboxFileManager;
+import hcv.manager.FileManager;
 import hcv.manager.IFileManager;
 import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -29,6 +30,7 @@ public class WebAppConfig {
 
     @Bean
     public IFileManager fileManager(){
-        return new DropboxFileManager();
+		//return new DropboxFileManager();
+        return new FileManager();
     }
 }

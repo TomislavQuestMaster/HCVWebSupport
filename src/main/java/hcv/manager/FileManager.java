@@ -6,8 +6,7 @@ import hcv.model.FileRequest;
 import hcv.model.Training;
 import org.apache.commons.fileupload.FileItem;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * @author tdubravcevic
@@ -17,7 +16,7 @@ public class FileManager implements IFileManager{
 	@Override
 	public File fetchFile(Training training) {
 
-		return new File(AppProperties.FILE_LOCATION.getValue() + "\\" + training.getId() + ".xml");
+		return new File(AppProperties.FILE_LOCATION.getValue() + File.pathSeparator + training.getId() + ".txt");
 	}
 
 	@Override
@@ -27,14 +26,14 @@ public class FileManager implements IFileManager{
             throw new Exception("Unsupported state: " + item.getFieldName());
         }
 
-        File file = new File(AppProperties.FILE_LOCATION.getValue() + "\\" + item.getName() + ".xml");
+        File file = new File(AppProperties.FILE_LOCATION.getValue() + File.pathSeparator + item.getName() + ".txt");
         item.write(file);
 	}
 
     @Override
     public void deleteFile(Training training) throws Exception {
 
-        File file = new File(AppProperties.FILE_LOCATION.getValue() + "\\" + training.getId() + ".xml");
+        File file = new File(AppProperties.FILE_LOCATION.getValue() + File.pathSeparator + training.getId() + ".txt");
 
         if(!file.delete()){
             throw new Exception("Delete failed");
@@ -42,7 +41,18 @@ public class FileManager implements IFileManager{
     }
 
     @Override
-    public void storeData(FileRequest data) throws IOException, DbxException {
+    public void storeData(FileRequest request) throws IOException, DbxException {
 
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(request.getData().getBytes());
+
+		File file = new File(AppProperties.FILE_LOCATION.getValue() + File.pathSeparator + request.getName() + ".txt");
+		OutputStream outputStream = new FileOutputStream(file);
+
+		int read = 0;
+		byte[] bytes = new byte[1024];
+
+		while ((read = inputStream.read(bytes)) != -1) {
+			outputStream.write(bytes, 0, read);
+		}
     }
 }
