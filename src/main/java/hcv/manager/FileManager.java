@@ -16,7 +16,7 @@ public class FileManager implements IFileManager{
 	@Override
 	public File fetchFile(Training training) {
 
-		return new File(AppProperties.FILE_LOCATION.getValue() + File.pathSeparator + training.getId() + ".txt");
+		return new File("/home/hcv" + File.separator + training.getId() + ".txt");
 	}
 
 	@Override
@@ -26,14 +26,14 @@ public class FileManager implements IFileManager{
             throw new Exception("Unsupported state: " + item.getFieldName());
         }
 
-        File file = new File(AppProperties.FILE_LOCATION.getValue() + File.pathSeparator + item.getName() + ".txt");
+        File file = new File("/home/hcv" + File.separator  + item.getName() + ".txt");
         item.write(file);
 	}
 
     @Override
     public void deleteFile(Training training) throws Exception {
 
-        File file = new File(AppProperties.FILE_LOCATION.getValue() + File.pathSeparator + training.getId() + ".txt");
+        File file = new File("/home/hcv" + File.separator  + training.getId() + ".txt");
 
         if(!file.delete()){
             throw new Exception("Delete failed");
@@ -45,7 +45,7 @@ public class FileManager implements IFileManager{
 
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(request.getData().getBytes());
 
-		File file = new File(AppProperties.FILE_LOCATION.getValue() + File.pathSeparator + request.getName() + ".txt");
+		File file = new File("/home/hcv" + File.separator  + request.getName() + ".txt");
 		OutputStream outputStream = new FileOutputStream(file);
 
 		int read = 0;
