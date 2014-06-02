@@ -46,6 +46,7 @@ public class FileManager implements IFileManager{
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(request.getData().getBytes());
 
 		File file = new File("/home/hcv" + File.separator  + request.getName() + ".txt");
+        file.createNewFile();
 		OutputStream outputStream = new FileOutputStream(file);
 
 		int read = 0;
