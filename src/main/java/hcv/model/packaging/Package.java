@@ -1,6 +1,7 @@
 package hcv.model.packaging;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class Package {
 	private PackageType type;
 
 	@Column(length = 1000)
-	private List<Long> trainings;
+	private ArrayList<Long> trainings;
 
 	private Long lastUpdate;
 	private String updatingDeviceName;
@@ -105,7 +106,7 @@ public class Package {
 		return trainings;
 	}
 
-	public void setTrainings(List<Long> trainings) {
+	public void setTrainings(ArrayList<Long> trainings) {
 
 		this.trainings = trainings;
 	}
