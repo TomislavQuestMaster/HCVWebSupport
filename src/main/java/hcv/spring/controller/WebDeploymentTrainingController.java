@@ -1,6 +1,7 @@
 package hcv.spring.controller;
 
 import com.dropbox.core.DbxException;
+import com.google.common.collect.Lists;
 import com.mysema.query.types.expr.BooleanExpression;
 import hcv.data.repositories.TrainingRepository;
 import hcv.manager.FileManager;
@@ -78,6 +79,14 @@ public class WebDeploymentTrainingController {
 
         return filtered;
     }
+
+	@RequestMapping(value = "/shopList", method = RequestMethod.GET)
+	public
+	@ResponseBody
+	List<Training> getShopList() throws IOException {
+
+		return Lists.newArrayList(repository.findAll(training.price.goe(0)));
+	}
 
     @RequestMapping(value = "/byName", method = RequestMethod.POST)
     public
