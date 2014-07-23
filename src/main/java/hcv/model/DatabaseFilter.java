@@ -1,6 +1,7 @@
 package hcv.model;
 
 import com.mysema.query.types.path.StringPath;
+import hcv.model.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class DatabaseFilter {
 	//private List<TrainingType> types;
 	private SortType sortBy;
 	private SortDirection direction;
-    private String owner;
+    private User owner;
 
     public DatabaseFilter() {
 		tags = new ArrayList<TrainingTag>();
@@ -70,11 +71,11 @@ public class DatabaseFilter {
 		levels.add(level);
 	}
 
-    public String getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 }

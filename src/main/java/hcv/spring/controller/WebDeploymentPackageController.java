@@ -3,6 +3,7 @@ package hcv.spring.controller;
 import com.google.common.collect.Lists;
 import hcv.data.repositories.PackageRepository;
 import hcv.model.packaging.Package;
+import hcv.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,7 +45,7 @@ public class WebDeploymentPackageController {
 	@RequestMapping(value = "/getPackagesInGroup", method = RequestMethod.POST)
 	public
 	@ResponseBody
-	List<Package> filter(@RequestBody Long group, @RequestBody String owner) throws IOException {
+	List<Package> filter(@RequestBody Long group, @RequestBody User owner) throws IOException {
 		//TODO get from request
 		return Lists.newArrayList(repository.findAll(package$.groupId.eq(group).and(package$.owner.eq(owner))));
 	}
@@ -52,7 +53,7 @@ public class WebDeploymentPackageController {
 	@RequestMapping(value = "/allPackages", method = RequestMethod.POST)
 	public
 	@ResponseBody
-	List<Package> filter(@RequestBody String owner) throws IOException {
+	List<Package> filter(@RequestBody User owner) throws IOException {
 
 		return Lists.newArrayList(repository.findAll(package$.owner.eq(owner)));
 	}
