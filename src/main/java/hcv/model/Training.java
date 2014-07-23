@@ -1,5 +1,7 @@
 package hcv.model;
 
+import hcv.model.user.User;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,7 +20,10 @@ public class Training {
 
 	private String name;
 	private Integer uniqueDeviceId;
-	private String owner;
+
+	@ManyToOne
+	private User owner;
+
 	private Long lastUpdate;
 	private String updatingDeviceName;
 
@@ -77,12 +82,12 @@ public class Training {
 		this.uniqueDeviceId = uniqueDeviceId;
 	}
 
-	public String getOwner() {
+	public User getOwner() {
 
 		return owner;
 	}
 
-	public void setOwner(String owner) {
+	public void setOwner(User owner) {
 
 		this.owner = owner;
 	}

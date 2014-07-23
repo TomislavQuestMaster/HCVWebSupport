@@ -1,9 +1,6 @@
 package hcv.model.user;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author tdubravcevic
@@ -17,19 +14,25 @@ public class User {
 	private Long id;
 	private String username;
 	private String password;
+
+	@Enumerated(EnumType.STRING)
 	private RightsLevel rightsLevel;
+
+	@Enumerated(EnumType.STRING)
 	private UserType userType;
-	private Integer clubId;
+
+	@ManyToOne
+	private Club club;
 
 	public User() {
 	}
 
-	public User(String username, String password, RightsLevel rightsLevel, UserType userType, Integer clubId) {
+	public User(String username, String password, RightsLevel rightsLevel, UserType userType, Club club) {
 		this.username = username;
 		this.password = password;
 		this.rightsLevel = rightsLevel;
 		this.userType = userType;
-		this.clubId = clubId;
+		this.club = club;
 	}
 
 	public String getUsername() {
@@ -76,13 +79,13 @@ public class User {
 		this.id = id;
 	}
 
-	public Integer getClubId() {
+	public Club getClub() {
 
-		return clubId;
+		return club;
 	}
 
-	public void setClubId(Integer clubId) {
+	public void setClub(Club club) {
 
-		this.clubId = clubId;
+		this.club = club;
 	}
 }
