@@ -1,5 +1,6 @@
 package hcv.spring.config;
 
+import hcv.data.persistance.FlywayDatabaseMigrator;
 import org.hibernate.ejb.HibernatePersistence;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,11 +40,13 @@ public class DatabaseConfig {
 	public DataSource dataSource() {
 
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-
 		dataSource.setDriverClassName(env.getRequiredProperty(PROPERTY_NAME_DATABASE_DRIVER));
 		dataSource.setUrl(env.getRequiredProperty(PROPERTY_NAME_DATABASE_URL));
 		dataSource.setUsername(env.getRequiredProperty(PROPERTY_NAME_DATABASE_USERNAME));
 		dataSource.setPassword(env.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));
+
+		new FlywayDatabaseMigrator().migrateDatabase(dataSource);
+
 		return dataSource;
 	}
 
