@@ -1,0 +1,33 @@
+<div id='content' ng-controller='ShopController'>
+
+
+    <table ng-table="" class="table">
+
+        <tr>
+            <td data-title="'Name'">
+                <input type="text" class="form-control" ng-model="filter.name">
+            </td>
+            <td data-title="'Creator'">
+                <input type="text" class="form-control" ng-model="filter.owner">
+            </td>
+            <td data-title="'Price'">
+                <input type="number" class="form-control" ng-model="filter.price">
+            </td>
+        </tr>
+
+        <tr ng-repeat="training in trainings | filter: searchFilter">
+
+            <td data-title="'Name'">
+                {{training.name}}
+            </td>
+            <td data-title="'Creator'">
+                {{training.owner}}
+            </td>
+            <td data-title="'Price'">
+                {{training.price}}
+            </td>
+        </tr>
+    </table>
+
+
+</div>

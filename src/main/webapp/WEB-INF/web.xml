@@ -26,6 +26,10 @@
         </init-param>
     </servlet>
 
+	<listener>
+		<listener-class>hcv.metrics.HcvInstrumentedFilterContextListener</listener-class>
+	</listener>
+
 	<filter>
 		<filter-name>instrumentedFilter</filter-name>
 		<filter-class>com.codahale.metrics.servlet.InstrumentedFilter</filter-class>
@@ -48,6 +52,16 @@
 	<servlet-mapping>
 		<servlet-name>metricsAdmin</servlet-name>
 		<url-pattern>/admin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>metricsServlet</servlet-name>
+		<servlet-class>com.codahale.metrics.servlets.MetricsServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>metricsServlet</servlet-name>
+		<url-pattern>/admin/metrics</url-pattern>
 	</servlet-mapping>
 
     <servlet-mapping>

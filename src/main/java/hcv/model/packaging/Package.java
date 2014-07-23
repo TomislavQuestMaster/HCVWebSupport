@@ -1,5 +1,8 @@
 package hcv.model.packaging;
 
+import hcv.model.Training;
+import hcv.model.user.User;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +19,10 @@ public class Package {
 	private long id;
 
 	private String name;
-	private String owner;
+
+	@ManyToOne
+	private User owner;
+
 	private long groupId;
 
 	@Column(length = 1000)
@@ -25,8 +31,8 @@ public class Package {
 	private String keypoints;
 	private PackageType type;
 
-	@Column(length = 1000)
-	private ArrayList<Long> trainings;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Training> trainings;
 
 	private Long lastUpdate;
 	private String updatingDeviceName;
@@ -51,12 +57,12 @@ public class Package {
 		this.name = name;
 	}
 
-	public String getOwner() {
+	public User getOwner() {
 
 		return owner;
 	}
 
-	public void setOwner(String owner) {
+	public void setOwner(User owner) {
 
 		this.owner = owner;
 	}
@@ -101,12 +107,12 @@ public class Package {
 		this.type = type;
 	}
 
-	public List<Long> getTrainings() {
+	public List<Training> getTrainings() {
 
 		return trainings;
 	}
 
-	public void setTrainings(ArrayList<Long> trainings) {
+	public void setTrainings(ArrayList<Training> trainings) {
 
 		this.trainings = trainings;
 	}

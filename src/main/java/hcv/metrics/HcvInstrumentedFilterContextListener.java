@@ -5,8 +5,11 @@ import com.codahale.metrics.health.HealthCheckRegistry;
 import com.codahale.metrics.servlet.InstrumentedFilterContextListener;
 import com.codahale.metrics.servlets.HealthCheckServlet;
 import com.codahale.metrics.servlets.MetricsServlet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.ServletContextEvent;
+import java.util.List;
 
 /**
  * @author tdubravcevic
