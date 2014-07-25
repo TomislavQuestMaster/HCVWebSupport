@@ -2,6 +2,9 @@ package hcv.trainings.controller;
 
 import com.dropbox.core.DbxException;
 import com.google.common.collect.Lists;
+import com.itextpdf.text.DocumentException;
+import hcv.packages.IPackageManager;
+import hcv.packages.PackageManager;
 import hcv.trainings.persistance.TrainingRepository;
 import hcv.core.manager.*;
 import hcv.model.*;
@@ -26,6 +29,9 @@ import static hcv.model.QTraining.*;
 @Controller
 public class WebDeploymentTrainingController {
 
+	@Autowired
+	private IPackageManager packageManager;
+
     @Autowired
     private TrainingRepository repository;
 
@@ -35,6 +41,12 @@ public class WebDeploymentTrainingController {
     public void executeQuery(String query) {
         //repository.findAll(query);
     }
+
+	@RequestMapping(value = "/pdfTest", method = RequestMethod.GET)
+	public void pdfTest() throws IOException, DocumentException {
+
+		packageManager.generateSheet(null);
+	}
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public

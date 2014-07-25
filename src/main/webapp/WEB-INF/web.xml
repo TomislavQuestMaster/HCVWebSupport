@@ -21,7 +21,7 @@
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>
-                hcv.spring.config.WebAppConfig
+                hcv.core.config.WebAppConfig
             </param-value>
         </init-param>
     </servlet>

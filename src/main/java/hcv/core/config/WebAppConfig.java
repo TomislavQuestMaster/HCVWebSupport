@@ -4,6 +4,8 @@ import hcv.core.manager.*;
 import hcv.core.metrics.*;
 import com.codahale.metrics.Counter;
 import com.codahale.metrics.MetricRegistry;
+import hcv.packages.IPackageManager;
+import hcv.packages.PackageManager;
 import hcv.users.persistance.UserRepository;
 import hcv.users.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,11 @@ public class WebAppConfig {
 	public IFileManager fileManager() {
 		//return new DropboxFileManager();
 		return new FileManager();
+	}
+
+	@Bean
+	public IPackageManager packageManager(){
+		return new PackageManager();
 	}
 
 	@Bean
