@@ -1,17 +1,15 @@
 package hcv.packages;
 
-import com.itextpdf.text.Phrase;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import hcv.packages.model.PackageItem;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
 /**
@@ -37,13 +35,13 @@ public class PackageManager implements IPackageManager {
 	}
 
 	@Override
-	public void generateSheet(PackageItem packageItem) throws FileNotFoundException, DocumentException {
+	public void generateSheet(PackageItem packageItem) throws IOException, DocumentException {
 		createDocument();
 	}
 
 	private PdfPTable table;
 
-	private void createDocument () throws DocumentException, FileNotFoundException {
+	private void createDocument () throws DocumentException, IOException {
 		Document document = new Document ();
 
 		PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\tdubravcevic\\Downloads\\pdfTest.pdf"));
@@ -68,8 +66,7 @@ public class PackageManager implements IPackageManager {
 		document.close();
 	}
 
-	private void addTrainingRow (String description, String keypoints)
-	{
+	private void addTrainingRow (String description, String keypoints) throws BadElementException, IOException {
 		PdfPTable column1 = new PdfPTable (1);
 		column1.addCell("");
 		column1.addCell("");
@@ -82,13 +79,13 @@ public class PackageManager implements IPackageManager {
 		PdfPTable column2 = new PdfPTable (1);
 		column2.addCell("Ziel:..............................................................");
 
-		//Image jpg = iTextSharp.text.Image.GetInstance (Application.dataPath + "/training.jpg");
-		//jpg.ScaleAbsoluteWidth (340f);
-		//jpg.ScaleAbsoluteHeight (210.0f);
+		Image jpg = Image.getInstance("C:\\Users\\tdubravcevic\\Downloads\\ci-mail.png");
+		jpg.scaleAbsoluteWidth (340f);
+		jpg.scaleAbsoluteHeight (210.0f);
 
-		//PdfPCell imageCell = new PdfPCell (jpg);
-		//imageCell.Padding = 2f;
-		//column2.AddCell (imageCell);
+		PdfPCell imageCell = new PdfPCell (jpg);
+		imageCell.setPadding(2f);
+		column2.addCell (imageCell);
 
 
 		PdfPCell column2Wrapper = new PdfPCell (column2);

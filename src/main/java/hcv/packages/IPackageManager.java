@@ -7,6 +7,7 @@ import hcv.packages.model.PackageItem;
 import hcv.trainings.model.Training;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public interface IPackageManager extends ICrud<PackageItem>, ISync<PackageItem> 
 
 	void pack(PackageItem packageItem);
 
-	void generateSheet(PackageItem packageItem) throws FileNotFoundException, DocumentException;
+	void generateSheet(PackageItem packageItem) throws IOException, DocumentException;
 
 	//void updatePackages(long oldUid, TrainingDetails training);
 
