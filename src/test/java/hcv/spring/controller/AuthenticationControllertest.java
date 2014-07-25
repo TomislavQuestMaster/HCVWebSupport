@@ -1,8 +1,9 @@
 package hcv.spring.controller;
 
-import hcv.data.service.UserService;
+import hcv.users.persistance.UserService;
 import hcv.model.Response;
-import hcv.model.user.User;
+import hcv.users.controller.AuthenticationController;
+import hcv.users.model.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

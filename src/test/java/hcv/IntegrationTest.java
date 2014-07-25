@@ -1,7 +1,7 @@
 package hcv;
 
 import hcv.core.RequestHandler;
-import hcv.spring.controller.SynchronizationController;
+import hcv.trainings.controller.SynchronizationController;
 import org.apache.commons.fileupload.FileItem;
 import org.junit.Test;
 

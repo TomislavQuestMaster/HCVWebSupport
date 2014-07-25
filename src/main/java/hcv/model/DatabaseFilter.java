@@ -1,10 +1,10 @@
 package hcv.model;
 
-import com.mysema.query.types.path.StringPath;
-import hcv.model.user.User;
+import hcv.users.model.User;
+import hcv.trainings.model.TrainingLevel;
+import hcv.trainings.model.TrainingTag;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author tdubravcevic

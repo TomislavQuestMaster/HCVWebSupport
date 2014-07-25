@@ -27,7 +27,7 @@
     </servlet>
 
 	<listener>
-		<listener-class>hcv.metrics.HcvInstrumentedFilterContextListener</listener-class>
+		<listener-class>hcv.core.metrics.HcvInstrumentedFilterContextListener</listener-class>
 	</listener>
 
 	<filter>

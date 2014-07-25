@@ -2,9 +2,10 @@ package hcv.spring.controller;
 
 import hcv.model.DatabaseFilter;
 import hcv.model.SortType;
-import hcv.model.Training;
-import hcv.model.TrainingLevel;
-import hcv.spring.config.SystemTestConfiguration;
+import hcv.trainings.controller.WebDeploymentTrainingController;
+import hcv.trainings.model.Training;
+import hcv.trainings.model.TrainingLevel;
+import hcv.core.config.SystemTestConfiguration;
 import hcv.utils.TestProfile;
 import org.junit.Ignore;
 import org.junit.Test;
