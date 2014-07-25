@@ -8,6 +8,4 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
  * @author tdubravcevic
  */
 public interface UserRepository extends JpaRepository<User, Long>, QueryDslPredicateExecutor<User> {
-
-    public User findByUsername(String username);
 }

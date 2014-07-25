@@ -4,7 +4,7 @@ import hcv.core.manager.*;
 import hcv.core.metrics.*;
 import com.codahale.metrics.Counter;
 import com.codahale.metrics.MetricRegistry;
-import hcv.users.persistance.UserService;
+import hcv.users.persistance.UserRepository;
 import hcv.users.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
@@ -30,7 +30,7 @@ public class WebAppConfig {
 	private ServletContext servletContext;
 
 	@Autowired
-	private UserService service;
+	private UserRepository userRepository;
 
 	@Bean
 	public UrlBasedViewResolver setupViewResolver() {
@@ -56,7 +56,7 @@ public class WebAppConfig {
 
 		Map<String, Counter> counters = new HashMap<String, Counter>();
 
-		for (User user : service.findAll()) {
+		for (User user : userRepository.findAll()) {
 
 			String username = user.getUsername();
 

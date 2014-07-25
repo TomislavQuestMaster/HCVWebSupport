@@ -1,7 +1,7 @@
 package hcv.users.controller;
 
 import com.codahale.metrics.Counter;
-import hcv.users.persistance.UserService;
+import hcv.users.persistance.UserRepository;
 import hcv.core.metrics.*;
 import hcv.model.Response;
 import hcv.users.model.User;
@@ -12,32 +12,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import static hcv.model.user.QUser.*;
+
 /**
  * @author tdubravcevic
  */
 @Controller
-public class AuthenticationController{
+public class AuthenticationController {
 
 	@Autowired
-	private UserService service;
+	private UserRepository userRepository;
 
 	@Autowired
 	private LoginCounters loginCounters;
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public
-	@ResponseBody
-	Response registering(
-			@RequestBody
-			User request) {
+	public @ResponseBody Response registering(@RequestBody User request) {
 
-		User found = service.findByUsername(request.getUsername());
+		User found = userRepository.findOne(user.username.eq(request.getUsername()));
 
 		if (found != null) {
 			return failed("User exists", 1);
 		}
 
-		service.create(request);
+		userRepository.save(request);
 
 		loginCounters.getCounterMap().put(request.getUsername(), new Counter());
 
@@ -45,13 +43,9 @@ public class AuthenticationController{
 	}
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public
-	@ResponseBody
-	Response verifying(
-			@RequestBody
-			User request) {
+	public @ResponseBody Response verifying(@RequestBody User request) {
 
-		User found = service.findByUsername(request.getUsername());
+		User found = userRepository.findOne(user.username.eq(request.getUsername()));
 
 		if (found == null) {
 			return failed("Verification failed, not found", 2);
@@ -61,9 +55,19 @@ public class AuthenticationController{
 			return failed("Verification failed, wrong password", 3);
 		}
 
-		loginCounters.getCounterMap().get(found.getUsername()).inc();
+		incrementLoginCounter(found);
 
 		return succeeded("Verification succeeded");
+	}
+
+	private void incrementLoginCounter(User user) {
+
+		Counter counter = loginCounters.getCounterMap().get(user.getUsername());
+		if (counter == null) {
+			counter = new Counter();
+			loginCounters.getCounterMap().put(user.getUsername(), counter);
+		}
+		counter.inc();
 	}
 
 	private Response failed(String message, Integer status) {
