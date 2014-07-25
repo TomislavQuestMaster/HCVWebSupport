@@ -74,3 +74,21 @@ CREATE TABLE packages_trainings (
 )
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB;
+
+CREATE TABLE calendar (
+  id BIGINT(20) NOT NULL AUTO_INCREMENT,
+  lastUpdate BIGINT(20) NULL DEFAULT NULL,
+  notes VARCHAR(1000) NULL DEFAULT NULL,
+  since BIGINT(20) NULL DEFAULT NULL,
+  until BIGINT(20) NULL DEFAULT NULL,
+  updatingDeviceName VARCHAR(255) NULL DEFAULT NULL,
+  owner_id BIGINT(20) NULL DEFAULT NULL,
+  packageItem_id BIGINT(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX FK_3reuenj0nqre1n4ygyrxr153i (owner_id),
+  INDEX FK_r9pcautagyqyj2ynvvtjf7kik (packageItem_id),
+  CONSTRAINT FK_r9pcautagyqyj2ynvvtjf7kik FOREIGN KEY (packageItem_id) REFERENCES packages (id),
+  CONSTRAINT FK_3reuenj0nqre1n4ygyrxr153i FOREIGN KEY (owner_id) REFERENCES users (id)
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB;

@@ -1,5 +1,8 @@
 package hcv.model.calendar;
 
+import hcv.model.packaging.PackageItem;
+import hcv.model.user.User;
+
 import javax.persistence.*;
 
 /**
@@ -17,12 +20,15 @@ public class CalendarItem {
     private String notes;
     private Long since;
     private Long until;
-    private Long packageId;
+
+	@ManyToOne
+    private PackageItem packageItem;
+
+	@ManyToOne
+	private User owner;
 
     private Long lastUpdate;
     private String updatingDeviceName;
-
-
 
     public long getId() {
         return id;
@@ -56,12 +62,12 @@ public class CalendarItem {
         this.until = until;
     }
 
-    public Long getPackageId() {
-        return packageId;
+    public PackageItem getPackageItem() {
+        return packageItem;
     }
 
-    public void setPackageId(Long packageId) {
-        this.packageId = packageId;
+    public void setPackageItem(PackageItem packageItem) {
+        this.packageItem = packageItem;
     }
 
     public Long getLastUpdate() {
@@ -79,4 +85,14 @@ public class CalendarItem {
     public void setUpdatingDeviceName(String updatingDeviceName) {
         this.updatingDeviceName = updatingDeviceName;
     }
+
+	public User getOwner() {
+
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+
+		this.owner = owner;
+	}
 }
