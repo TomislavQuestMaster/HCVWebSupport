@@ -11,7 +11,7 @@ import java.util.List;
  * @author tdubravcevic
  */
 @Entity
-@Table(name="packages")
+@Table(name="hcv_packages")
 public class PackageItem {
 
 	@Id
@@ -112,7 +112,7 @@ public class PackageItem {
 		return trainings;
 	}
 
-	public void setTrainings(ArrayList<Training> trainings) {
+	public void setTrainings(List<Training> trainings) {
 
 		this.trainings = trainings;
 	}

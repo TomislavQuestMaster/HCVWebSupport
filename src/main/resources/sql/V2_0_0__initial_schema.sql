@@ -1,4 +1,4 @@
-CREATE TABLE clubs (
+CREATE TABLE hcv_clubs (
 	id BIGINT(20) NOT NULL AUTO_INCREMENT,
 	maxMembersSize INT(11) NULL DEFAULT NULL,
 	username VARCHAR(255) NULL DEFAULT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE clubs (
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB;
 
-CREATE TABLE users (
+CREATE TABLE hcv_users (
   id BIGINT(20) NOT NULL AUTO_INCREMENT,
   password VARCHAR(255) NULL DEFAULT NULL,
   rightsLevel VARCHAR(255) NULL DEFAULT NULL,
@@ -16,12 +16,12 @@ CREATE TABLE users (
   club_id BIGINT(20) NULL DEFAULT NULL,
   PRIMARY KEY (id),
   INDEX FK_nck1mcsb5bmdb9ysei1f6omnl (club_id),
-  CONSTRAINT FK_nck1mcsb5bmdb9ysei1f6omnl FOREIGN KEY (club_id) REFERENCES clubs (id)
+  CONSTRAINT FK_nck1mcsb5bmdb9ysei1f6omnl FOREIGN KEY (club_id) REFERENCES hcv_clubs (id)
 )
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB;
 
-CREATE TABLE trainings (
+CREATE TABLE hcv_trainings (
 	id BIGINT(20) NOT NULL AUTO_INCREMENT,
 	defense SMALLINT(6) NULL DEFAULT NULL,
 	description VARCHAR(1000) NULL DEFAULT NULL,
@@ -42,12 +42,12 @@ CREATE TABLE trainings (
 	owner_id BIGINT(20) NULL DEFAULT NULL,
 	PRIMARY KEY (id),
 	INDEX FK_7l05qa0qivlm7k0mrut2o7wo0 (owner_id),
-	CONSTRAINT FK_7l05qa0qivlm7k0mrut2o7wo0 FOREIGN KEY (owner_id) REFERENCES users (id)
+	CONSTRAINT FK_7l05qa0qivlm7k0mrut2o7wo0 FOREIGN KEY (owner_id) REFERENCES hcv_users (id)
 )
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB;
 
-CREATE TABLE packages (
+CREATE TABLE hcv_packages (
   id BIGINT(20) NOT NULL AUTO_INCREMENT,
   description VARCHAR(1000) NULL DEFAULT NULL,
   groupId BIGINT(20) NOT NULL,
@@ -59,23 +59,23 @@ CREATE TABLE packages (
   owner_id BIGINT(20) NULL DEFAULT NULL,
   PRIMARY KEY (id),
   INDEX FK_3d9f4n4jgq27ock6r9vkqbgqx (owner_id),
-  CONSTRAINT FK_3d9f4n4jgq27ock6r9vkqbgqx FOREIGN KEY (owner_id) REFERENCES users (id)
+  CONSTRAINT FK_3d9f4n4jgq27ock6r9vkqbgqx FOREIGN KEY (owner_id) REFERENCES hcv_users (id)
 )
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB;
 
-CREATE TABLE packages_trainings (
+CREATE TABLE hcv_packages_hcv_trainings (
   packages_id BIGINT(20) NOT NULL,
   trainings_id BIGINT(20) NOT NULL,
   INDEX FK_k8f1wco1cj54ujo98b2l4pqgt (trainings_id),
   INDEX FK_ogv1kdlgo14rjf0cgiy9bquak (packages_id),
-  CONSTRAINT FK_ogv1kdlgo14rjf0cgiy9bquak FOREIGN KEY (packages_id) REFERENCES packages (id),
-  CONSTRAINT FK_k8f1wco1cj54ujo98b2l4pqgt FOREIGN KEY (trainings_id) REFERENCES trainings (id)
+  CONSTRAINT FK_ogv1kdlgo14rjf0cgiy9bquak FOREIGN KEY (packages_id) REFERENCES hcv_packages (id),
+  CONSTRAINT FK_k8f1wco1cj54ujo98b2l4pqgt FOREIGN KEY (trainings_id) REFERENCES hcv_trainings (id)
 )
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB;
 
-CREATE TABLE calendar (
+CREATE TABLE hcv_calendar (
   id BIGINT(20) NOT NULL AUTO_INCREMENT,
   lastUpdate BIGINT(20) NULL DEFAULT NULL,
   notes VARCHAR(1000) NULL DEFAULT NULL,
@@ -87,8 +87,8 @@ CREATE TABLE calendar (
   PRIMARY KEY (`id`),
   INDEX FK_3reuenj0nqre1n4ygyrxr153i (owner_id),
   INDEX FK_r9pcautagyqyj2ynvvtjf7kik (packageItem_id),
-  CONSTRAINT FK_r9pcautagyqyj2ynvvtjf7kik FOREIGN KEY (packageItem_id) REFERENCES packages (id),
-  CONSTRAINT FK_3reuenj0nqre1n4ygyrxr153i FOREIGN KEY (owner_id) REFERENCES users (id)
+  CONSTRAINT FK_r9pcautagyqyj2ynvvtjf7kik FOREIGN KEY (packageItem_id) REFERENCES hcv_packages (id),
+  CONSTRAINT FK_3reuenj0nqre1n4ygyrxr153i FOREIGN KEY (owner_id) REFERENCES hcv_users (id)
 )
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB;

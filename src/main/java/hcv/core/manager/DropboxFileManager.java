@@ -6,6 +6,7 @@ import hcv.trainings.model.Training;
 import org.apache.commons.fileupload.FileItem;
 
 import java.io.*;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -30,7 +31,13 @@ public class DropboxFileManager implements IFileManager {
 	}
 
 	@Override
-	public void storeFile(Training training, FileItem item) throws Exception {
+	public File fetchFileFromShop(String name) {
+
+		return null;
+	}
+
+	@Override
+	public void storeFile(Training training, FileItem item, String... optionalPath) throws Exception {
 
 		getClient().uploadFile("/test/" + training.getId() + ".txt", DbxWriteMode.force(), item.getSize(), item.getInputStream());
 	}
@@ -46,6 +53,11 @@ public class DropboxFileManager implements IFileManager {
 
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(request.getData().getBytes());
 		getClient().uploadFile("/test/" + request.getName() + ".txt", DbxWriteMode.force(), request.getData().length(), inputStream);
+	}
+
+	@Override
+	public void zipTrainings(List<Training> trainings, String outputZipFile) {
+
 	}
 
 	private DbxClient getClient() {

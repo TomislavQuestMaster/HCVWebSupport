@@ -90,7 +90,7 @@ public class SynchronizationController {
 
 		FileItem item;
 		try {
-			item = handler.parseRequest(request);
+			item = handler.parseRequest(request).get(1);
 		} catch (Exception e) {
 			return new Response(5, "Parsing request on upload failed: " + e.getMessage());
 		}

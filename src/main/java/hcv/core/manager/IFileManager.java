@@ -7,6 +7,7 @@ import org.apache.commons.fileupload.FileItem;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author tdubravcevic
@@ -15,9 +16,13 @@ public interface IFileManager {
 
 	File fetchFile(Training training);
 
-	void storeFile(Training training, FileItem item) throws Exception;
+	File fetchFileFromShop(String name);
+
+	void storeFile(Training training, FileItem item, String... optionalPath) throws Exception;
 
     void deleteFile(Training training) throws Exception;
 
     void storeData(FileRequest data) throws IOException, DbxException;
+
+	void zipTrainings(List<Training> trainings, String outputZipFile);
 }

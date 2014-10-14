@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Tomo.
  */
 @Entity
-@Table(name = "trainings")
+@Table(name = "hcv_trainings")
 public class Training {
 
 	@Id

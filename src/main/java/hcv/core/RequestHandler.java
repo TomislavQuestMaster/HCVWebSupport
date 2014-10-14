@@ -25,7 +25,7 @@ public class RequestHandler {
         this.uploader = new ServletFileUpload(fileFactory);
     }
 
-    public FileItem parseRequest(HttpServletRequest request) throws Exception {
+    public List<FileItem> parseRequest(HttpServletRequest request) throws Exception {
 
 		if (!ServletFileUpload.isMultipartContent(request)) {
 			throw new ServletException("Content type is not multipart/form-data");
@@ -37,7 +37,7 @@ public class RequestHandler {
             throw new Exception("Not enough items: " + fileItemsList.size());
         }
 
-		return fileItemsList.get(1);
+		return fileItemsList;
     }
 
 }

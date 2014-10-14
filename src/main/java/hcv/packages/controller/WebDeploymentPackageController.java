@@ -1,6 +1,7 @@
 package hcv.packages.controller;
 
 import com.google.common.collect.Lists;
+import hcv.packages.model.QPackageItem;
 import hcv.packages.persistance.PackageRepository;
 import hcv.packages.model.PackageItem;
 import hcv.users.model.User;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static hcv.model.packaging.QPackage.*;
+import static hcv.packages.model.QPackageItem.*;
 
 /**
  * @author tdubravcevic
@@ -47,7 +49,7 @@ public class WebDeploymentPackageController {
 	@ResponseBody
 	List<PackageItem> filter(@RequestBody Long group, @RequestBody User owner) throws IOException {
 		//TODO get from request
-		return Lists.newArrayList(repository.findAll(package$.groupId.eq(group).and(package$.owner.eq(owner))));
+		return Lists.newArrayList(repository.findAll(packageItem.groupId.eq(group).and(packageItem.owner.eq(owner))));
 	}
 
 	@RequestMapping(value = "/allPackages", method = RequestMethod.POST)
@@ -55,7 +57,7 @@ public class WebDeploymentPackageController {
 	@ResponseBody
 	List<PackageItem> filter(@RequestBody User owner) throws IOException {
 
-		return Lists.newArrayList(repository.findAll(package$.owner.eq(owner)));
+		return Lists.newArrayList(repository.findAll(packageItem.owner.eq(owner)));
 	}
 
 

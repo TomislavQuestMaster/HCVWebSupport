@@ -1,0 +1,116 @@
+<div id='content'>
+
+    <div class="row">
+        <div class="col-lg-6" ui-tree="options">
+            <h3>Packages &amp; Trainings</h3>
+            <ol ui-tree-nodes ng-model="packages" type="package">
+                <li ng-repeat="package in packages" ui-tree-node>
+                    <div class="group-title angular-ui-tree-handle" ng-show="!package.editing">
+                        <a href=""
+                           class="btn btn-danger btn-xs pull-right"
+                           data-nodrag
+                           ng-click="removePackage(package)"
+                           ng-show="package.id!=0">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </a>
+                        <a href=""
+                           class="btn btn-primary btn-xs pull-right"
+                           data-nodrag
+                           data-toggle="modal"
+                           data-target="#create-new-package"
+                           ng-click="editThePackage(package)"
+                           ng-show="package.id!=0">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                        </a>
+                        <div>&nbsp;{{package.name}}</div>
+                    </div>
+                    <ol ui-tree-nodes ng-model="package.trainings" type="training">
+                        <li ng-repeat="training in package.trainings" ui-tree-node>
+                            <div class="category-title angular-ui-tree-handle">
+                                <div class="row">
+                                    <div class="col-lg-3">{{training.name}}</div>
+                                    <div class="col-lg-1">{{training.stress}}</div>
+                                    <div class="col-lg-1">{{training.technics}}</div>
+                                    <div class="col-lg-1">{{training.tactics}}</div>
+                                    <div class="col-lg-1">{{training.fun}}</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+            <ol class="angular-ui-tree-nodes">
+                <li class="angular-ui-tree-node">
+                    <div class="group-title angular-ui-tree-handle">
+                        <button type="submit"
+                                class="btn btn-default"
+                                data-toggle="modal"
+                                data-target="#create-new-package"
+                                ng-click="addPackage()">Add
+                            Package
+                        </button>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="modal fade"
+         id="create-new-package"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="myModalLabel"
+         aria-hidden="true"> <!-- modal create new application start -->
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h2 class="modal-title text-uppercase">Create/edit new package</h2>
+                </div>
+                <div class="modal-body"> <!-- modal body start -->
+
+                    <div class="form-group">
+                        <label for="package-name">Package name:</label>
+                        <input type="text"
+                               class="form-control"
+                               id="package-name"
+                               ng-model="editPackage.name"
+                               placeholder="Enter package name">
+                    </div>
+                    <div class="form-group">
+                        <label for="package-description">Package description:</label>
+                        <textarea class="form-control"
+                                  id="package-description"
+                                  ng-model="editPackage.description"
+                                  placeholder="Enter package description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="package-keypoints">Package keypoints:</label>
+                        <textarea class="form-control"
+                                  id="package-keypoints"
+                                  ng-model="editPackage.keypoints"
+                                  placeholder="Enter package keypoints"></textarea>
+                    </div>
+
+                </div>
+                <!-- // modal body end -->
+
+                <div class="modal-footer"> <!-- modal footer start -->
+                    <div class="btn-group pull-right">
+                        <a href="#"
+                           role="button"
+                           id="btn-save"
+                           class="btn btn-primary"
+                           data-dismiss="modal"
+                           aria-hidden="true"
+                           ng-click="savePackage(editPackage)">Save changes</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel
+                        </button>
+                    </div>
+                </div>
+                <!-- // modal footer end -->
+
+            </div>
+        </div>
+    </div>
+</div>

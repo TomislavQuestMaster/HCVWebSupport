@@ -53,7 +53,7 @@ public class WebDeploymentTrainingController {
     @ResponseBody
     Long insert(@RequestBody Training training) throws IOException {
 
-        return repository.save(training).getId();
+		return repository.save(training).getId();
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.POST)

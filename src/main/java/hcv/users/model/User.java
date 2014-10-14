@@ -6,7 +6,7 @@ import javax.persistence.*;
  * @author tdubravcevic
  */
 @Entity
-@Table(name = "users")
+@Table(name = "hcv_users")
 public class User {
 
     @Id

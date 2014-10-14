@@ -1,4 +1,4 @@
-var app = angular.module('Application', ['ui.bootstrap', 'ngRoute', 'ngTable']);
+var app = angular.module('Application', ['ui.bootstrap', 'ngRoute', 'ngTable', 'ui.tree']);
 
 app.config(['$routeProvider', function ($routeProvider) {
 
@@ -6,5 +6,9 @@ app.config(['$routeProvider', function ($routeProvider) {
         .when('/shop', {
             templateUrl: 'shop/shop.html',
             controller: 'ShopController'
+        })
+        .when('/packages', {
+            templateUrl: 'shopAdmin/shopAdmin.html',
+            controller: 'ShopAdminController'
         });
 }]);

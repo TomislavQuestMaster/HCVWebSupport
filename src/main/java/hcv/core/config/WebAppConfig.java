@@ -1,5 +1,6 @@
 package hcv.core.config;
 
+import hcv.AppProperties;
 import hcv.core.manager.*;
 import hcv.core.metrics.*;
 import com.codahale.metrics.Counter;
@@ -10,6 +11,7 @@ import hcv.users.persistance.UserRepository;
 import hcv.users.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
@@ -34,6 +36,9 @@ public class WebAppConfig {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private Environment environment;
+
 	@Bean
 	public UrlBasedViewResolver setupViewResolver() {
 
@@ -47,7 +52,7 @@ public class WebAppConfig {
 	@Bean
 	public IFileManager fileManager() {
 		//return new DropboxFileManager();
-		return new FileManager();
+		return new FileManager(environment.getProperty(AppProperties.FILE_LOCATION.getName()));
 	}
 
 	@Bean
