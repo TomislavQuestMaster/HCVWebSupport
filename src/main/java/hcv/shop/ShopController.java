@@ -149,15 +149,26 @@ public class ShopController {
 	}
 
 	@RequestMapping(value = "/shop/package", method = RequestMethod.PUT)
-	public void updatePackage(@RequestBody PackageItem packageItem) {
+	@ResponseBody
+	public String updatePackage(@RequestBody PackageItem packageItem) {
 
 		//PackageItem savedPackage = packageRepository.findOne(packageItem.getId());
 		//savedPackage.setName(packageItem.getName());
 		//savedPackage.setDescription(packageItem.getDescription());
 		//savedPackage.setKeypoints(packageItem.getKeypoints());
 		//savedPackage.setTrainings(packageItem.getTrainings());
-
+		User powerUser = userRepository.findOne(QUser.user.username.eq("powerUser"));
+		packageItem.setOwner(powerUser);
 		packageRepository.save(packageItem);
+		return "OK";
+	}
+
+	@RequestMapping(value = "/shop/package/{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public String deletePackage(@PathVariable("id") Long id) {
+
+		packageRepository.delete(id);
+		return "OK";
 	}
 
 }

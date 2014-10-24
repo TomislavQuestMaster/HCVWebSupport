@@ -43,7 +43,7 @@ public class WebAppConfig {
 	public UrlBasedViewResolver setupViewResolver() {
 
 		UrlBasedViewResolver resolver = new UrlBasedViewResolver();
-		resolver.setPrefix("/app/");
+		resolver.setPrefix("/none/");
 		resolver.setSuffix(".jsp");
 		resolver.setViewClass(JstlView.class);
 		return resolver;

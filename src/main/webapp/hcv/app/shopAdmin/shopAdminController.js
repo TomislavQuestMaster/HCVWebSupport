@@ -98,6 +98,9 @@ app.controller("ShopAdminController", ['$scope', '$filter', '$log', '$http', 'Sh
             for (var i = $scope.packages.length - 1; i >= 0; i--) {
                 var trainingPackage = $scope.packages[i];
                 trainingPackage.sortOrder = i + 1;
+                if(trainingPackage.id != 0){
+                    $scope.savePackage(trainingPackage);
+                }
             }
         };
 
@@ -114,6 +117,7 @@ app.controller("ShopAdminController", ['$scope', '$filter', '$log', '$http', 'Sh
                 // update changes to server
                 if (destNodes.isParent(sourceNode)
                     && destNodes.$element.attr('type') == 'training') { // If it moves in the same group, then only update group
+                    $scope.savePackages();
                     //var group = destNodes.$nodeScope.$modelValue;
                     //group.save();
                 } else { // save all

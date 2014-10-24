@@ -65,6 +65,22 @@ angular.module('Application').service('ShopService', ['$http', '$q', '$log', fun
         return deferred.promise;
     };
 
+    this.getPackagesFromShop = function () {
+
+        var deferred = $q.defer();
+
+        $http.get('/shop/packages')
+            .success(function (data) {
+
+                deferred.resolve(data);
+
+            }).error(function (data, status, headers, config) {
+                $log.log(data, status, headers, config);
+            });
+
+        return deferred.promise;
+    };
+
     this.addPackage = function (packageItem) {
 
         var deferred = $q.defer();
@@ -110,7 +126,7 @@ angular.module('Application').service('ShopService', ['$http', '$q', '$log', fun
 
         var deferred = $q.defer();
 
-        $http.delete('/shop/package', packageId)
+        $http.delete('/shop/package/'+packageId)
             .success(function () {
                 deferred.resolve();
             })
