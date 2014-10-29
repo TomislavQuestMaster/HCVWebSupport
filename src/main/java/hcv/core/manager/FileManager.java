@@ -39,18 +39,18 @@ public class FileManager implements IFileManager {
 	}
 
 	@Override
-	public void storeFile(Training training, FileItem item, String... optionalPath) throws Exception {
+	public void storeFile(Training training, FileItem item, String type, String... optionalPath) throws Exception {
 
-		if (!item.getFieldName().equals("file")) {
-			throw new Exception("Unsupported state: " + item.getFieldName());
-		}
+		//if (!item.getFieldName().equals("file")) {
+		//	throw new Exception("Unsupported state: " + item.getFieldName());
+		//}
 
 		String extraPath = "";
 		for (String path : optionalPath) {
 			extraPath += path + File.separator;
 		}
 
-		File file = new File(basePath + File.separator + extraPath + training.getId() + ".txt");
+		File file = new File(basePath + File.separator + extraPath + training.getId() + "." + type);
 		item.write(file);
 	}
 
@@ -89,12 +89,13 @@ public class FileManager implements IFileManager {
 			ZipOutputStream zos = new ZipOutputStream(fos);
 
 			ObjectMapper mapper = new ObjectMapper();
-			File detailsFile = new File(basePath + File.separator + outputFileName + "_details.json");
+			File detailsFile = new File(basePath + File.separator + "shop" + File.separator + outputFileName + "_details.json");
 			mapper.writeValue(detailsFile, trainings);
 
 			zipFile(zos, outputFileName + "_details.json");
 			for (Training training : trainings) {
 				zipFile(zos, training.getId() + ".txt");
+				zipFile(zos, training.getId() + ".png");
 			}
 
 			zos.closeEntry();
@@ -112,7 +113,7 @@ public class FileManager implements IFileManager {
 		try {
 			ZipEntry ze = new ZipEntry(name);
 			zos.putNextEntry(ze);
-			FileInputStream in = new FileInputStream(basePath + File.separator + name);
+			FileInputStream in = new FileInputStream(basePath + File.separator + "shop" + File.separator + name);
 			int len;
 			while ((len = in.read(buffer)) > 0) {
 				zos.write(buffer, 0, len);

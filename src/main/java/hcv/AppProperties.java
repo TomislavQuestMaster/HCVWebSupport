@@ -6,7 +6,7 @@ import java.io.IOException;
  */
 public enum AppProperties {
 
-	FILE_LOCATION ("hcv.file.manager.location", "C:\\Users\\Tomo\\Desktop\\HCV"),
+	FILE_LOCATION ("hcv.file.manager.location", "C:\\Users\\tdubravcevic\\Downloads"),
 	;
 
 	private final String name;

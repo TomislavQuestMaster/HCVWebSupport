@@ -33,7 +33,7 @@ public class RequestHandler {
 
         List<FileItem> fileItemsList = uploader.parseRequest(request);
 
-        if (fileItemsList.size() != 2) {
+        if (fileItemsList.size() != 3) {
             throw new Exception("Not enough items: " + fileItemsList.size());
         }
 

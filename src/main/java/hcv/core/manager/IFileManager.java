@@ -18,7 +18,7 @@ public interface IFileManager {
 
 	File fetchFileFromShop(String name);
 
-	void storeFile(Training training, FileItem item, String... optionalPath) throws Exception;
+	void storeFile(Training training, FileItem item, String type, String... optionalPath) throws Exception;
 
     void deleteFile(Training training) throws Exception;
 

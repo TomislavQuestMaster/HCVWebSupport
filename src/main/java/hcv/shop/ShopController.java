@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
+import com.mysema.query.types.expr.BooleanExpression;
 import hcv.core.RequestHandler;
 import hcv.core.manager.IFileManager;
 import hcv.model.Response;
@@ -65,7 +66,13 @@ public class ShopController {
 			sortedTrainings.addAll(item.getTrainings());
 		}
 
-		return Lists.newArrayList(repository.findAll(training.owner.username.eq("powerUser").and(training.notIn(sortedTrainings))));
+		BooleanExpression query = training.owner.username.eq("powerUser");
+
+		if(!sortedTrainings.isEmpty()){
+			query = query.and(training.notIn(sortedTrainings));
+		}
+
+		return Lists.newArrayList(repository.findAll(query));
 	}
 
 	@RequestMapping(value = "/shop/download/{file_id}", method = RequestMethod.GET)
@@ -109,9 +116,15 @@ public class ShopController {
 		received = saveTrainingIfNotExists(received);
 
 		try {
-			manager.storeFile(received, items.get(1), "shop");
+			manager.storeFile(received, items.get(1), "txt", "shop");
 		} catch (Exception e) {
-			return new Response(6, "Upload failed: " + e.getMessage());
+			return new Response(6, "Upload file failed: " + e.getMessage());
+		}
+
+		try {
+			manager.storeFile(received, items.get(2), "png", "shop");
+		} catch (Exception e) {
+			return new Response(6, "Upload image failed: " + e.getMessage());
 		}
 
 		return new Response(0, "Upload successful");
@@ -119,10 +132,12 @@ public class ShopController {
 
 	private Training saveTrainingIfNotExists(Training received) {
 
-		if(repository.count(training.id.eq(received.getId()))==0){
-			received = repository.save(received);
+		if(repository.count(training.uniqueDeviceId.eq(received.getId().intValue()))==0){
+			received.setUniqueDeviceId(received.getId().intValue());
+			return repository.save(received);
 		}
-		return received;
+
+		return repository.findOne(training.uniqueDeviceId.eq(received.getId().intValue()));
 	}
 
 	public Training getTrainingFromRequest(FileItem item) throws IOException {
