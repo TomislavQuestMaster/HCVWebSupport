@@ -1,7 +1,6 @@
 package hcv.packages.controller;
 
 import com.google.common.collect.Lists;
-import hcv.packages.model.QPackageItem;
 import hcv.packages.persistance.PackageRepository;
 import hcv.packages.model.PackageItem;
 import hcv.users.model.User;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
 import java.util.List;
 
-import static hcv.model.packaging.QPackage.*;
 import static hcv.packages.model.QPackageItem.*;
 
 /**

@@ -97,7 +97,7 @@ public class SynchronizationController {
 
 		Training training = repository.findById(Long.decode(item.getName()));
 		try {
-			manager.storeFile(training, item, "txt");
+			manager.storeFile(training, item, "xml");
 		} catch (Exception e) {
 			return new Response(6, "Upload failed: " + e.getMessage());
 		}

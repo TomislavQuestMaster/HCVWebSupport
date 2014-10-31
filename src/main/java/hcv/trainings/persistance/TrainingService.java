@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 
-import static hcv.model.QTraining.*;
+import static hcv.trainings.model.QTraining.*;
 
 /**
  * @author tdubravcevic

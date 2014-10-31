@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
 import java.util.*;
 
-import static hcv.model.QTraining.*;
+import static hcv.trainings.model.QTraining.*;
 
 /**
  * @author tdubravcevic

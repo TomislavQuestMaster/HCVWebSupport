@@ -35,7 +35,7 @@ public class FileManager implements IFileManager {
 	@Override
 	public File fetchFile(Training training) {
 
-		return new File(basePath + File.separator + training.getId() + ".txt");
+		return new File(basePath + File.separator + training.getId() + ".xml");
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class FileManager implements IFileManager {
 	@Override
 	public void deleteFile(Training training) throws Exception {
 
-		File file = new File(basePath + File.separator + training.getId() + ".txt");
+		File file = new File(basePath + File.separator + training.getId() + ".xml");
 
 		if (!file.delete()) {
 			throw new Exception("Delete failed");
@@ -69,7 +69,7 @@ public class FileManager implements IFileManager {
 
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(request.getData().getBytes());
 
-		File file = new File(basePath + File.separator + request.getName() + ".txt");
+		File file = new File(basePath + File.separator + request.getName() + ".xml");
 		file.createNewFile();
 		OutputStream outputStream = new FileOutputStream(file);
 
@@ -94,7 +94,7 @@ public class FileManager implements IFileManager {
 
 			zipFile(zos, outputFileName + "_details.json");
 			for (Training training : trainings) {
-				zipFile(zos, training.getId() + ".txt");
+				zipFile(zos, training.getId() + ".xml");
 				zipFile(zos, training.getId() + ".png");
 			}
 

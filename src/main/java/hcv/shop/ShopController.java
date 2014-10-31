@@ -1,6 +1,6 @@
 package hcv.shop;
 
-import static hcv.model.QTraining.*;
+import static hcv.trainings.model.QTraining.*;
 import static hcv.packages.model.QPackageItem.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +15,7 @@ import com.mysema.query.types.expr.BooleanExpression;
 import hcv.core.RequestHandler;
 import hcv.core.manager.IFileManager;
 import hcv.model.Response;
-import hcv.model.user.QUser;
+import hcv.users.model.QUser;
 import hcv.packages.model.PackageItem;
 import hcv.packages.persistance.PackageRepository;
 import hcv.trainings.model.Training;
@@ -80,7 +80,7 @@ public class ShopController {
 	@ResponseBody
 	FileSystemResource download(@PathVariable("file_id") Long fileId) throws FileNotFoundException {
 
-		return new FileSystemResource(manager.fetchFileFromShop(fileId+".txt"));
+		return new FileSystemResource(manager.fetchFileFromShop(fileId+".xml"));
 	}
 
 	@RequestMapping(value = "/shop/package/download/{file_id}", method = RequestMethod.GET)
@@ -116,7 +116,7 @@ public class ShopController {
 		received = saveTrainingIfNotExists(received);
 
 		try {
-			manager.storeFile(received, items.get(1), "txt", "shop");
+			manager.storeFile(received, items.get(1), "xml", "shop");
 		} catch (Exception e) {
 			return new Response(6, "Upload file failed: " + e.getMessage());
 		}

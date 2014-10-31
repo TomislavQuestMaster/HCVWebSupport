@@ -65,11 +65,11 @@ COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB;
 
 CREATE TABLE hcv_packages_hcv_trainings (
-  packages_id BIGINT(20) NOT NULL,
+  hcv_packages_id BIGINT(20) NOT NULL,
   trainings_id BIGINT(20) NOT NULL,
-  INDEX FK_k8f1wco1cj54ujo98b2l4pqgt (trainings_id),
-  INDEX FK_ogv1kdlgo14rjf0cgiy9bquak (packages_id),
-  CONSTRAINT FK_ogv1kdlgo14rjf0cgiy9bquak FOREIGN KEY (packages_id) REFERENCES hcv_packages (id),
+  INDEX FK_k8f1wco1cj54ujo98b2l4pqgt (hcv_trainings_id),
+  INDEX FK_ogv1kdlgo14rjf0cgiy9bquak (hcv_packages_id),
+  CONSTRAINT FK_ogv1kdlgo14rjf0cgiy9bquak FOREIGN KEY (hcv_packages_id) REFERENCES hcv_packages (id),
   CONSTRAINT FK_k8f1wco1cj54ujo98b2l4pqgt FOREIGN KEY (trainings_id) REFERENCES hcv_trainings (id)
 )
 COLLATE='latin1_swedish_ci'

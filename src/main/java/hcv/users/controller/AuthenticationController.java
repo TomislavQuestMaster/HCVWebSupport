@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import static hcv.model.user.QUser.*;
+import static hcv.users.model.QUser.*;
 
 /**
  * @author tdubravcevic
