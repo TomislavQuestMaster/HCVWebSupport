@@ -132,7 +132,7 @@ public class SynchronizationControllerTest {
 
         whenNewUpdate();
 
-        thenResponseIdIs(2);
+        thenResponseIdIs(2L);
 	}
 
     private void givenTraining(long id, String name) {
@@ -176,7 +176,7 @@ public class SynchronizationControllerTest {
         assertEquals(name, captor.getValue().getName());
     }
 
-    private void thenResponseIdIs(Integer id) {
+    private void thenResponseIdIs(Long id) {
         assertEquals(id, response.getStatus());
         assertEquals("Update successful", response.getMessage());
     }

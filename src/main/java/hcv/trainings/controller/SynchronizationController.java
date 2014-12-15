@@ -52,7 +52,7 @@ public class SynchronizationController {
 		received.setLastUpdate((new Date()).getTime());
 		received.setUpdatingDeviceName(request.getDeviceName());
 		received = repository.save(received);
-		return new Response(received.getId().intValue(), "Update successful");  //TODO different id returning
+		return new Response(received.getId(), "Update successful");  //TODO different id returning
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
@@ -63,10 +63,10 @@ public class SynchronizationController {
 		try {
 			manager.deleteFile(received);
 		} catch (Exception e) {
-			return new Response(7, "Delete failed");
+			return new Response(7L, "Delete failed");
 		}
 
-		return new Response(0, "Delete successful");
+		return new Response(0L, "Delete successful");
 	}
 
 	@RequestMapping(value = "/fetch", method = RequestMethod.POST)
@@ -92,17 +92,17 @@ public class SynchronizationController {
 		try {
 			item = handler.parseRequest(request).get(1);
 		} catch (Exception e) {
-			return new Response(5, "Parsing request on upload failed: " + e.getMessage());
+			return new Response(5L, "Parsing request on upload failed: " + e.getMessage());
 		}
 
 		Training training = repository.findById(Long.decode(item.getName()));
 		try {
 			manager.storeFile(training, item, "xml");
 		} catch (Exception e) {
-			return new Response(6, "Upload failed: " + e.getMessage());
+			return new Response(6L, "Upload failed: " + e.getMessage());
 		}
 
-		return new Response(0, "Upload successful");
+		return new Response(0L, "Upload successful");
 	}
 
 	@RequestMapping(value = "/download/{file_id}", method = RequestMethod.GET)

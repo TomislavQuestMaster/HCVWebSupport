@@ -19,6 +19,8 @@ public interface IPackageManager extends ICrud<PackageItem>, ISync<PackageItem> 
 
 	List<PackageItem> getAllPackages();
 
+	List<PackageItem> getAllPackagesForTraining(Training training);
+
 	List<PackageItem> getAllPackagesInGroup(PackageItem group);
 
 	void pack(PackageItem packageItem);

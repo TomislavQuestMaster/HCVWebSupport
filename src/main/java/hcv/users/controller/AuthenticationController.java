@@ -32,7 +32,7 @@ public class AuthenticationController {
 		User found = userRepository.findOne(user.username.eq(request.getUsername()));
 
 		if (found != null) {
-			return failed("User exists", 1);
+			return failed("User exists", 1L);
 		}
 
 		userRepository.save(request);
@@ -48,11 +48,11 @@ public class AuthenticationController {
 		User found = userRepository.findOne(user.username.eq(request.getUsername()));
 
 		if (found == null) {
-			return failed("Verification failed, not found", 2);
+			return failed("Verification failed, not found", 2L);
 		}
 
 		if (!request.getPassword().equals(found.getPassword())) {
-			return failed("Verification failed, wrong password", 3);
+			return failed("Verification failed, wrong password", 3L);
 		}
 
 		incrementLoginCounter(found);
@@ -70,7 +70,7 @@ public class AuthenticationController {
 		counter.inc();
 	}
 
-	private Response failed(String message, Integer status) {
+	private Response failed(String message, Long status) {
 
 		Response response = new Response();
 		response.setStatus(status);
@@ -81,7 +81,7 @@ public class AuthenticationController {
 	private Response succeeded(String message) {
 
 		Response response = new Response();
-		response.setStatus(0);
+		response.setStatus(0L);
 		response.setMessage(message);
 		return response;
 	}

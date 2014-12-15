@@ -46,6 +46,12 @@ public class Training {
 
 	private Double price;
 
+	private Long time;
+
+	public Training(Long id){
+		this.id = id;
+	}
+
 	public Training() {
 
 		tags = new ArrayList<TrainingTag>();
@@ -242,6 +248,16 @@ public class Training {
 		this.price = price;
 	}
 
+	public Long getTime() {
+
+		return time;
+	}
+
+	public void setTime(Long time) {
+
+		this.time = time;
+	}
+
 	public static class StressComparator implements Comparator<Training> {
 
 		public int compare(Training o1, Training o2) {
@@ -304,5 +320,30 @@ public class Training {
 
 			return o1.getName().compareTo(o2.getName());
 		}
+	}
+
+	@Override
+	public boolean equals(Object o) {
+
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Training)) {
+			return false;
+		}
+
+		final Training training = (Training) o;
+
+		if (id != null ? !id.equals(training.id) : training.id != null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+
+		return id != null ? id.hashCode() : 0;
 	}
 }

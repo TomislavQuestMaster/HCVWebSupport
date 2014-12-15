@@ -8,7 +8,6 @@ public enum TrainingLevel {
 	SEMIPRO,
 	ELITE,
 	NOVICE,
-	JUNIOR,
 	MINI,
 	MOSKITO,
 	PICCOLO,

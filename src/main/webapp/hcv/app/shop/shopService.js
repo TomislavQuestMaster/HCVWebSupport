@@ -89,6 +89,7 @@ angular.module('Application').service('ShopService', ['$http', '$q', '$log', fun
 
         delete packageToSend.sortOrder;
         delete packageToSend.type;
+        packageToSend.lastUpdate = new Date().getTime();
 
         $http.post('/shop/package', packageToSend, {headers: {
             'Content-Type': 'application/json' }})
@@ -109,6 +110,7 @@ angular.module('Application').service('ShopService', ['$http', '$q', '$log', fun
 
         delete packageToSend.sortOrder;
         delete packageToSend.type;
+        packageToSend.lastUpdate = new Date().getTime();
 
         packageToSend.trainings.forEach(function(training){
             delete training.type;

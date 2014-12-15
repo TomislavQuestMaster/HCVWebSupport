@@ -1,0 +1,1 @@
+ALTER TABLE hcv_trainings ADD time BIGINT(20) NULL;

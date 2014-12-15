@@ -5,13 +5,10 @@ package hcv.trainings.model;
  */
 public enum TrainingTag {
 
-	BACKCHECKING,
-	COMPETITIVE,
-	GOALIE,
 	PASSING,
 	SHOOTING,
-	STATIONS,
+	SKATING,
+	STICK_HANDLING,
 	TACTICS,
-	TIMING,
 	WARMUP
 }

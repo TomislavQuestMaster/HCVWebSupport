@@ -5,6 +5,9 @@ import com.google.common.collect.Lists;
 import com.itextpdf.text.DocumentException;
 import hcv.packages.IPackageManager;
 import hcv.packages.PackageManager;
+import hcv.packages.model.PackageItem;
+import hcv.packages.model.QPackageItem;
+import hcv.packages.persistance.PackageRepository;
 import hcv.trainings.persistance.TrainingRepository;
 import hcv.core.manager.*;
 import hcv.model.*;
@@ -35,6 +38,9 @@ public class WebDeploymentTrainingController {
     @Autowired
     private TrainingRepository repository;
 
+	@Autowired
+	private PackageRepository packageRepository;
+
     @Autowired
     private IFileManager manager;
 
@@ -61,7 +67,13 @@ public class WebDeploymentTrainingController {
     @ResponseBody
     String delete(@RequestBody Training training) throws IOException {
 
-        repository.delete(training);
+	    for(PackageItem item : packageRepository.findAll(QPackageItem.packageItem.trainings.contains(training))){
+
+		    item.getTrainings().remove(training);
+		    packageRepository.save(item);
+	    }
+
+        repository.delete(training.getId());
         return "OK";
     }
 

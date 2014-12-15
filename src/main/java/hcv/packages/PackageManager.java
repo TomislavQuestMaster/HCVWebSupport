@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.itextpdf.text.pdf.PdfWriter;
+import hcv.trainings.model.Training;
 
 /**
  * @author tdubravcevic
@@ -19,6 +20,12 @@ public class PackageManager implements IPackageManager {
 
 	@Override
 	public List<PackageItem> getAllPackages() {
+
+		return null;
+	}
+
+	@Override
+	public List<PackageItem> getAllPackagesForTraining(Training training) {
 
 		return null;
 	}

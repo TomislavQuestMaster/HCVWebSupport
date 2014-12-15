@@ -31,11 +31,14 @@ public class PackageItem {
 	private String keypoints;
 	private PackageType type;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private List<Training> trainings;
 
 	private Long lastUpdate;
 	private String updatingDeviceName;
+
+	@Column(length = 1000)
+	private ArrayList<Long> trainingsOrder;
 
 	public long getId() {
 
@@ -135,5 +138,15 @@ public class PackageItem {
 	public void setUpdatingDeviceName(String updatingDeviceName) {
 
 		this.updatingDeviceName = updatingDeviceName;
+	}
+
+	public ArrayList<Long> getTrainingsOrder() {
+
+		return trainingsOrder;
+	}
+
+	public void setTrainingsOrder(ArrayList<Long> trainingsOrder) {
+
+		this.trainingsOrder = trainingsOrder;
 	}
 }

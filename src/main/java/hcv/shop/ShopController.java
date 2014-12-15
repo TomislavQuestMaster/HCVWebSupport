@@ -2,6 +2,7 @@ package hcv.shop;
 
 import static hcv.trainings.model.QTraining.*;
 import static hcv.packages.model.QPackageItem.*;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.FileNotFoundException;
@@ -30,7 +31,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -48,7 +48,7 @@ public class ShopController {
 	@Autowired
 	private IFileManager manager;
 
-	@RequestMapping(value = "/shop/trainings", method = RequestMethod.GET)
+	@RequestMapping(value = "/shop/trainings", method = GET)
 	public
 	@ResponseBody
 	List<Training> getTrainingsFromShop() {
@@ -56,7 +56,7 @@ public class ShopController {
 		return Lists.newArrayList(repository.findAll(training.owner.username.eq("powerUser")));
 	}
 
-	@RequestMapping(value = "/shop/trainings/unsorted", method = RequestMethod.GET)
+	@RequestMapping(value = "/shop/trainings/unsorted", method = GET)
 	public
 	@ResponseBody
 	List<Training> getUnsortedTrainingsFromShop() {
@@ -75,7 +75,7 @@ public class ShopController {
 		return Lists.newArrayList(repository.findAll(query));
 	}
 
-	@RequestMapping(value = "/shop/download/{file_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/shop/download/{file_id}", method = GET)
 	public
 	@ResponseBody
 	FileSystemResource download(@PathVariable("file_id") Long fileId) throws FileNotFoundException {
@@ -83,7 +83,7 @@ public class ShopController {
 		return new FileSystemResource(manager.fetchFileFromShop(fileId+".xml"));
 	}
 
-	@RequestMapping(value = "/shop/package/download/{file_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/shop/package/download/{file_id}", method = GET)
 	public
 	@ResponseBody
 	FileSystemResource downloadPackage(@PathVariable("file_id") Long fileId) throws FileNotFoundException {
@@ -93,7 +93,7 @@ public class ShopController {
 		return new FileSystemResource(manager.fetchFileFromShop(fileId+".zip"));
 	}
 
-	@RequestMapping(value = "/shop/upload", method = RequestMethod.POST)
+	@RequestMapping(value = "/shop/upload", method = POST)
 	public @ResponseBody
 	Response upload(HttpServletRequest request) {
 
@@ -103,41 +103,31 @@ public class ShopController {
 		try {
 			items = handler.parseRequest(request);
 		} catch (Exception e) {
-			return new Response(5, "Parsing request on upload failed: " + e.getMessage());
+			return new Response(-1L, "Parsing request on upload failed: " + e.getMessage());
 		}
 
 		Training received;
 		try {
 			received = getTrainingFromRequest(items.get(0));
 		} catch (Exception e) {
-			return new Response(5, "Parsing details from form failed: " + e.getMessage());
+			return new Response(-2L, "Parsing details from form failed: " + e.getMessage());
 		}
 
-		received = saveTrainingIfNotExists(received);
+		received = repository.save(received);
 
 		try {
 			manager.storeFile(received, items.get(1), "xml", "shop");
 		} catch (Exception e) {
-			return new Response(6, "Upload file failed: " + e.getMessage());
+			return new Response(-3L, "Upload file failed: " + e.getMessage());
 		}
 
 		try {
-			manager.storeFile(received, items.get(2), "png", "shop");
+			manager.storeFile(received, items.get(2), "jpg", "shop");
 		} catch (Exception e) {
-			return new Response(6, "Upload image failed: " + e.getMessage());
+			return new Response(-4L, "Upload image failed: " + e.getMessage());
 		}
 
-		return new Response(0, "Upload successful");
-	}
-
-	private Training saveTrainingIfNotExists(Training received) {
-
-		if(repository.count(training.uniqueDeviceId.eq(received.getId().intValue()))==0){
-			received.setUniqueDeviceId(received.getId().intValue());
-			return repository.save(received);
-		}
-
-		return repository.findOne(training.uniqueDeviceId.eq(received.getId().intValue()));
+		return new Response(received.getId(), "Upload successful");
 	}
 
 	public Training getTrainingFromRequest(FileItem item) throws IOException {
@@ -146,7 +136,7 @@ public class ShopController {
 		return mapper.readValue(body, Training.class);
 	}
 
-	@RequestMapping(value = "/shop/packages", method = RequestMethod.GET)
+	@RequestMapping(value = "/shop/packages", method = GET)
 	public
 	@ResponseBody
 	List<PackageItem> getPackagesFromShop() {
@@ -154,7 +144,7 @@ public class ShopController {
 		return Lists.newArrayList(packageRepository.findAll(packageItem.owner.username.eq("powerUser")));
 	}
 
-	@RequestMapping(value = "/shop/package", method = RequestMethod.POST)
+	@RequestMapping(value = "/shop/package", method = POST)
 	@ResponseBody
 	public Long addPackageToShop(@RequestBody PackageItem packageItem) {
 
@@ -163,7 +153,7 @@ public class ShopController {
 		return packageRepository.save(packageItem).getId();
 	}
 
-	@RequestMapping(value = "/shop/package", method = RequestMethod.PUT)
+	@RequestMapping(value = "/shop/package", method = PUT)
 	@ResponseBody
 	public String updatePackage(@RequestBody PackageItem packageItem) {
 
@@ -178,12 +168,25 @@ public class ShopController {
 		return "OK";
 	}
 
-	@RequestMapping(value = "/shop/package/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/shop/package/{id}", method = DELETE)
 	@ResponseBody
 	public String deletePackage(@PathVariable("id") Long id) {
 
 		packageRepository.delete(id);
 		return "OK";
+	}
+
+	@RequestMapping(value = "/shop/package/{id}/lastUpdate", method = GET)
+	@ResponseBody
+	public Long getLastUpdated(@PathVariable("id") Long id){
+
+		PackageItem item = packageRepository.findOne(id);
+
+		if(item != null){
+			return item.getLastUpdate();
+		}
+
+		return -1L;
 	}
 
 }

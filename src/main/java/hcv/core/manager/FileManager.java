@@ -95,7 +95,7 @@ public class FileManager implements IFileManager {
 			zipFile(zos, outputFileName + "_details.json");
 			for (Training training : trainings) {
 				zipFile(zos, training.getId() + ".xml");
-				zipFile(zos, training.getId() + ".png");
+				zipFile(zos, training.getId() + ".jpg");
 			}
 
 			zos.closeEntry();
