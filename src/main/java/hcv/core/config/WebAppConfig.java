@@ -26,7 +26,7 @@ import java.util.Map;
 @Configuration
 @ComponentScan("hcv")
 @EnableWebMvc
-@PropertySource("classpath:hcv/application.properties")
+@PropertySource("classpath:localhost/application.properties")
 @Import(DatabaseConfig.class)
 public class WebAppConfig {
 

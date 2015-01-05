@@ -144,6 +144,17 @@ public class ShopController {
 		return Lists.newArrayList(packageRepository.findAll(packageItem.owner.username.eq("powerUser")));
 	}
 
+	@RequestMapping(value = "/shop/packages/release", method = GET)
+	public
+	@ResponseBody
+	List<PackageItem> getReleasedPackagesFromShop() {
+
+		return Lists.newArrayList(
+				packageRepository.findAll(
+						packageItem.owner.username.eq("powerUser").and(
+								packageItem.productionReady.eq(true))));
+	}
+
 	@RequestMapping(value = "/shop/package", method = POST)
 	@ResponseBody
 	public Long addPackageToShop(@RequestBody PackageItem packageItem) {
@@ -172,7 +183,22 @@ public class ShopController {
 	@ResponseBody
 	public String deletePackage(@PathVariable("id") Long id) {
 
+		PackageItem item = packageRepository.findOne(id);
+		item.setTrainings(null);
+		packageRepository.save(item);
+
 		packageRepository.delete(id);
+		return "OK";
+	}
+
+	@RequestMapping(value = "/shop/release/{release}/package/{id}", method = PUT)
+	@ResponseBody
+	public String releasePackage(@PathVariable("id") Long id, @PathVariable("release") Boolean release) {
+
+		PackageItem item = packageRepository.findOne(id);
+		item.setProductionReady(release);
+		packageRepository.save(item);
+
 		return "OK";
 	}
 

@@ -40,6 +40,9 @@ public class PackageItem {
 	@Column(length = 1000)
 	private ArrayList<Long> trainingsOrder;
 
+	@Column(name = "production_ready")
+	private boolean productionReady;
+
 	public long getId() {
 
 		return id;
@@ -148,5 +151,15 @@ public class PackageItem {
 	public void setTrainingsOrder(ArrayList<Long> trainingsOrder) {
 
 		this.trainingsOrder = trainingsOrder;
+	}
+
+	public boolean isProductionReady() {
+
+		return productionReady;
+	}
+
+	public void setProductionReady(boolean productionReady) {
+
+		this.productionReady = productionReady;
 	}
 }

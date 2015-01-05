@@ -1,0 +1,1 @@
+ALTER TABLE hcv_packages ADD production_ready BIT NULL;

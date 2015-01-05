@@ -108,6 +108,7 @@ angular.module('Application').service('ShopService', ['$http', '$q', '$log', fun
 
         var packageToSend = angular.copy(packageItem);
 
+        delete packageToSend.collapsed;
         delete packageToSend.sortOrder;
         delete packageToSend.type;
         packageToSend.lastUpdate = new Date().getTime();
@@ -122,6 +123,21 @@ angular.module('Application').service('ShopService', ['$http', '$q', '$log', fun
             .error(function (data, status, headers, config) {
                 $log.log(data, status, headers, config);
             });
+    };
+
+    this.markForProduction = function (packageId, release) {
+
+        var deferred = $q.defer();
+
+        $http.put('/shop/release/'+release+'/package/'+packageId)
+            .success(function () {
+                deferred.resolve();
+            })
+            .error(function (data, status, headers, config) {
+                $log.log(data, status, headers, config);
+            });
+
+        return deferred.promise;
     };
 
     this.removePackage = function (packageId) {

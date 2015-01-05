@@ -10,7 +10,8 @@ app.controller("ShopAdminController", ['$scope', '$filter', '$log', '$http', 'Sh
             description: "",
             keypoints: "",
             trainings: [],
-            sortOrder: 1
+            sortOrder: 1,
+            productionReady: false
         };
 
         $scope.packages = [];
@@ -25,6 +26,7 @@ app.controller("ShopAdminController", ['$scope', '$filter', '$log', '$http', 'Sh
             data.forEach(function (item) {
                 item.sortOrder = $scope.packages.length + 1;
                 item.type = "package";
+                item.collapsed = false;
                 item.trainings.forEach(function (training) {
                     training.type = 'training';
                 });
@@ -47,7 +49,8 @@ app.controller("ShopAdminController", ['$scope', '$filter', '$log', '$http', 'Sh
                 name: "Test",
                 type: "package",
                 trainings: [],
-                sortOrder: $scope.packages.length
+                sortOrder: $scope.packages.length,
+                productionReady: false
             };
         };
 
@@ -94,6 +97,14 @@ app.controller("ShopAdminController", ['$scope', '$filter', '$log', '$http', 'Sh
             }
         };
 
+        $scope.markForProduction = function (packageItem) {
+
+            ShopService.markForProduction(packageItem.id, !packageItem.productionReady).then(
+                function(){
+                packageItem.productionReady = !packageItem.productionReady;
+            });
+        };
+
         $scope.savePackages = function () {
             for (var i = $scope.packages.length - 1; i >= 0; i--) {
                 var trainingPackage = $scope.packages[i];
@@ -104,11 +115,20 @@ app.controller("ShopAdminController", ['$scope', '$filter', '$log', '$http', 'Sh
             }
         };
 
+        $scope.collapsePackage = function(packageItem){
+            packageItem.collapsed = !packageItem.collapsed;
+        };
+
         $scope.options = {
             accept: function (sourceNode, destNodes, destIndex) {
                 var data = sourceNode.$modelValue;
                 var destType = destNodes.$element.attr('type');
-                return (data.type == destType); // only accept the same type
+
+                if(data.type + "-false" == destType){
+                    return true;
+                }
+
+                return false; // only accept the same type
             },
             dropped: function (event) {
                 console.log(event);
@@ -128,6 +148,20 @@ app.controller("ShopAdminController", ['$scope', '$filter', '$log', '$http', 'Sh
                 //if (!window.confirm('Are you sure you want to drop it here?')) {
                 //    event.source.nodeScope.$$apply = false;
                 //}
+            },
+            beforeDrag: function(sourceNodeScope) {
+                if (sourceNodeScope.training) {
+                    var id = sourceNodeScope.training.id;
+                    for (var i = 0; i< $scope.packages.length; i++) {
+                        var trainingPackage = $scope.packages[i];
+                        for (var j = 0; j < trainingPackage.trainings.length; j++) {
+                            if (trainingPackage.trainings[j].id == id) {
+                                return !trainingPackage.productionReady;
+                            }
+                        }
+                    }
+                }
+                return true;
             }
         };
 
